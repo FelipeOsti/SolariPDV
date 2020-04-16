@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="SolariPDV.Views.EstoquePage">
+    <ContentPage.Content>
+        <RelativeLayout>
+            <StackLayout RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}"
+                         RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=1}">
+                <StackLayout VerticalOptions="FillAndExpand">
+                    <Label x:Name="lblMsg" Text="Escaneie um código de barras!" FontSize="10" HorizontalOptions="FillAndExpand" HorizontalTextAlignment="Center"/>
+                    <ListView x:Name="listViewEstoque" VerticalOptions="FillAndExpand" SeparatorVisibility="None" HasUnevenRows="true" BackgroundColor="White">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <ViewCell>
+                                    <StackLayout Orientation="Vertical" Padding="10">
+                                        <StackLayout Orientation="Horizontal">
+                                            <Label Text="{Binding CD_MATERIAL}" HorizontalOptions="StartAndExpand" FontSize="12"/>
+                                            <Label Text="{Binding DS_MATERIAL}" HorizontalOptions="FillAndExpand" FontSize="12"/>
+                                        </StackLayout>
+                                        <Label Text="{Binding DS_ESTABELECIMENTO}" HorizontalOptions="FillAndExpand" FontSize="12"/>
+                                        <StackLayout Orientation="Horizontal">
+                                            <Label Text="{Binding QT_SALDO}" HorizontalOptions="StartAndExpand" FontSize="14" FontAttributes="Bold"/>
+                                            <Label Text="{Binding svlUnitar}" HorizontalOptions="EndAndExpand" FontSize="14" FontAttributes="Bold"/>
+                                        </StackLayout>
+                                    </StackLayout>
+                                </ViewCell>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                    <Button x:Name="btScan" BackgroundColor="#e0bd02" TextColor="White" Text="Scanear" HorizontalOptions="FillAndExpand" VerticalOptions="EndAndExpand" Clicked="btScanClicked"/>
+                </StackLayout>
+            </StackLayout>
+        </RelativeLayout>
+    </ContentPage.Content>
+</ContentPage>

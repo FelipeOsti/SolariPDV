@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="SolariPDV.Views.LoginPage">
+    <ContentPage.Content>
+        <StackLayout VerticalOptions="FillAndExpand" BackgroundColor="White">
+            <Image Source="solariLogoIco.jpg" HeightRequest="150" WidthRequest="150" Margin="80"/>
+            <Label Text="Solari Negócios" Margin="0,-70,0,0" HorizontalOptions="Center" FontAttributes="Bold" />
+            <Label Text="Desenvolvendo Soluções" TextColor="Gray" HorizontalOptions="Center" Margin="0,0,0,50"/>
+            <StackLayout Margin="10">
+                <Entry x:Name="entryUsuario" Placeholder="Usuário" />
+                <Entry x:Name="entrySenha" Placeholder="Senha" IsPassword="True" />
+            </StackLayout>
+
+            <ActivityIndicator x:Name="indicator" IsVisible="False" IsEnabled="True" IsRunning="True" HorizontalOptions="Center" VerticalOptions="EndAndExpand"/>
+            <Button x:Name="btConfirma" Text="Confirmar" Margin="-1" HorizontalOptions="FillAndExpand" VerticalOptions="EndAndExpand" BackgroundColor="#e0bd02" TextColor="White" Clicked="btConfirma_Clicked"/>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

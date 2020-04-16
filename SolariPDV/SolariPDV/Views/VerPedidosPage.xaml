@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:controls="clr-namespace:SuaveControls.Views;assembly=SuaveControls.FloatingActionButton"
+             Title="Pedidos Pendentes"
+             mc:Ignorable="d"
+             x:Class="SolariPDV.Views.VerPedidosPage">
+    <RelativeLayout>
+        <StackLayout BackgroundColor="White">
+            <ListView x:Name="lstViewPedidos"
+                      HasUnevenRows="True"
+                      VerticalOptions="FillAndExpand"
+                      BackgroundColor="White"
+                      ItemTapped="lstViewPedidos_ItemTapped"
+                      ItemsSource="{Binding LstPedidos}"
+                      IsRefreshing="{Binding IsBusy}"
+                      SeparatorVisibility="None">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout Padding="10">
+                                <StackLayout Orientation="Horizontal">
+                                    <Label Text="Pedido: "/>
+                                    <Label Text="{Binding ID_PEDIDO}" FontSize="16" FontAttributes="Bold" VerticalOptions="Center"/>
+                                </StackLayout>
+                                <StackLayout Orientation="Horizontal">
+                                    <Label Text="{Binding DS_RAZAO}" FontSize="14" HorizontalOptions="FillAndExpand"/>
+                                    <Label Text="{Binding DS_VLTOTAL}" FontSize="14" HorizontalOptions="EndAndExpand" WidthRequest="90"/>
+                                </StackLayout>
+                                <Label Text="{Binding DS_SITDOCTO}" FontSize="10"/>
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>
+        <controls:FloatingActionButton x:Name="FABButton" HorizontalOptions="CenterAndExpand" WidthRequest="80" HeightRequest="90"
+                                       VerticalOptions="CenterAndExpand" Clicked="FABButton_Clicked"
+                                       Image="ic_add_white.png" ButtonColor="DarkOrange"                                       
+                                       RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1, Constant=-80}"  
+                                       RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=1, Constant=-80}" />
+
+        <controls:FloatingActionButton x:Name="FABButtonMesas" HorizontalOptions="CenterAndExpand" WidthRequest="80" HeightRequest="90"
+                                       VerticalOptions="CenterAndExpand" Clicked="FABButtonMesas_Clicked"
+                                       Image="mesa.png" ButtonColor="DarkOrange"                                       
+                                       RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1, Constant=-80}"  
+                                       RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=1, Constant=-160}" />
+    </RelativeLayout>
+</ContentPage>

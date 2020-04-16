@@ -1,0 +1,73 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             Title="Adicionando o Produto"
+             BackgroundColor="White"
+             x:Class="SolariPDV.Views.AdicionarItemPage">
+    <ContentPage.Content>
+        <StackLayout VerticalOptions="EndAndExpand">
+            <Grid Padding="10" BackgroundColor="White">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="180"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="20"/>
+                    <RowDefinition Height="35"/>
+                </Grid.RowDefinitions>
+                <Label Grid.Column="0" Grid.Row="0" Text="Quantidade"/>
+                <Label x:Name="labelQtde" Grid.Column="0" Grid.Row="1" FontAttributes="Bold" FontSize="24" />
+                <Stepper Grid.Column="1" Grid.Row="1" x:Name="qtdItem" Value="1" Minimum="1" Increment="1" ValueChanged="qtdItem_ValueChanged"/>
+            </Grid>
+            
+            <ListView x:Name="lstViewTamanho"
+                      ItemsSource="{Binding ItemCardapio}"
+                      HasUnevenRows="True"
+                      VerticalOptions="FillAndExpand"
+                      BackgroundColor="White"
+                      SeparatorVisibility="None">
+                <ListView.Header>
+                    <Label Text="Selecione um tamanho" HorizontalOptions="Center" FontAttributes="Bold"/>
+                </ListView.Header>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout Orientation="Horizontal" Padding="10">
+                                <Label Text="{Binding DS_TAMANHO}" HorizontalOptions="FillAndExpand" FontSize="14"/>
+                                <Label Text="{Binding DS_VLUNITARIO}" HorizontalOptions="EndAndExpand" WidthRequest="70" FontSize="14"/>
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+            <ListView x:Name="lstViewCarac"
+                      ItemsSource="{Binding LstCarac}"                      
+                      HasUnevenRows="True"
+                      VerticalOptions="FillAndExpand"
+                      BackgroundColor="White"
+                      SeparatorVisibility="None">
+                <ListView.Header>
+                    <Label Text="Selecione uma Caracteristica do Produto" HorizontalOptions="Center" FontAttributes="Bold"/>
+                </ListView.Header>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout Orientation="Horizontal" Padding="10">
+                                <Label Text="{Binding DS_CARACMAT}" HorizontalOptions="FillAndExpand" FontSize="14"/>
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <StackLayout Padding="10">
+                <Label Text="Assar o produto adicionado? (Pizzas / Massas)"/>
+                <Switch x:Name="bboAssar" HorizontalOptions="Start"  IsToggled="False" OnColor="DarkOrange" ThumbColor="DarkBlue"/>
+            </StackLayout>
+            <Button x:Name="btAdicionar" HorizontalOptions="FillAndExpand" VerticalOptions="End" Text="Adicionar ao Pedido" TextColor="White" BackgroundColor="DarkOrange" Clicked="btAdicionar_Clicked"/>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

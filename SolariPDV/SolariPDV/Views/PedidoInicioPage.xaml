@@ -1,0 +1,76 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:pancakeview="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView" 
+             xmlns:controls="clr-namespace:SuaveControls.Views;assembly=SuaveControls.FloatingActionButton"
+             mc:Ignorable="d"
+             Title="Pedido PDV"
+             x:Class="SolariPDV.Views.PedidoInicioPage">
+    <ContentPage.Content>
+        <RelativeLayout>
+            <StackLayout>
+                <ListView BackgroundColor="White" x:Name="lstView" RowHeight="100" SeparatorVisibility="None" ItemSelected="lstView_ItemSelected">
+                    <ListView.Header>
+                        <Grid Padding="5">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="35"/>
+                                <RowDefinition Height="35"/>
+                            </Grid.RowDefinitions>
+                            <Entry Grid.Column="0" x:Name="qtPessoas" Keyboard="Numeric" Placeholder="Número de Pessoas" FontSize="12" />
+                            <Picker Grid.Column="1" x:Name="nrMesa" Title="Número da Mesa" ItemDisplayBinding="{Binding DS_MESA}" Unfocused="nrMesa_Unfocused" FontSize="12" />
+                            <Entry Grid.Column="0" Grid.Row="1" x:Name="nomeCliente" Placeholder="Nome do Cliente" FontSize="12" Unfocused="nomeCliente_Unfocused"/>
+                            <Entry Grid.Column="1" Grid.Row="1" x:Name="nrTelefone" Keyboard="Telephone" Placeholder="Número de Telefone" FontSize="12" Unfocused="nrTelefone_Unfocused"/>
+                            <!--<Label Grid.Row="1" Grid.Column="0" Text="Data Hora de Emissão:" Margin="5,0"/>
+                            <Label Grid.Row="1" Grid.Column="1" x:Name="lblHora" Text=""/>-->
+                        </Grid>
+                    </ListView.Header>
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <pancakeview:PancakeView Margin="5,0,0,5" Elevation="2" BackgroundColor="#50a7d9" CornerRadius="50,0,5,0" IsClippedToBounds="true" HorizontalOptions="FillAndExpand"  >
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+
+                                        <Label Grid.Row="0" Grid.RowSpan="4" VerticalTextAlignment="Center" Grid.Column="0" Text="{Binding DS_CATEGORIA}" TextColor="White" Margin="15,0" FontSize="18" FontAttributes="Bold"/>
+
+                                        <pancakeview:PancakeView CornerRadius="40,0,40,0" Elevation="10" Grid.Row="0" Grid.RowSpan="4" Grid.Column="1" BackgroundColor="#3a3aa1" VerticalOptions="CenterAndExpand" HorizontalOptions="EndAndExpand">
+                                            <StackLayout Orientation="Horizontal" Margin="8">
+                                                <Label Text="Produtos" TextColor="White" VerticalOptions="Center" VerticalTextAlignment="Center" />
+                                                <Image WidthRequest="24" HeightRequest="24" Source="ic_forward.png" />
+                                            </StackLayout>
+                                        </pancakeview:PancakeView>
+                                    </Grid>
+                                </pancakeview:PancakeView>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                    <ListView.Footer>
+                        <StackLayout HeightRequest="100">
+                            
+                        </StackLayout>
+                    </ListView.Footer>
+                </ListView>
+            </StackLayout>
+
+            <controls:FloatingActionButton x:Name="FABButton" HorizontalOptions="CenterAndExpand" WidthRequest="80" HeightRequest="90"
+                                       VerticalOptions="CenterAndExpand"  Clicked="FABButton_Clicked"
+                                       Image="cart.png" ButtonColor="DarkOrange"                                       
+                                       RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1, Constant=-80}"  
+                                       RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=1, Constant=-80}" />
+        </RelativeLayout>
+    </ContentPage.Content>
+</ContentPage>
