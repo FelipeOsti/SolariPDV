@@ -39,7 +39,7 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-            <Button x:Name="btFinalizar" HorizontalOptions="FillAndExpand" VerticalOptions="End" Text="Enviar para Cozinha" TextColor="White" BackgroundColor="DarkOrange"/>
+            <Button x:Name="btFinalizar" HorizontalOptions="FillAndExpand" VerticalOptions="End" Text="Emitir Pedido" TextColor="White" BackgroundColor="DarkOrange"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

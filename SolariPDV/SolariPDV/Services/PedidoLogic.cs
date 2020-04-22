@@ -10,11 +10,21 @@ namespace SolariPDV.Services
 {
     public class PedidoLogic
     {
-        public async Task<ObservableCollection<PedidoSistemaModel>> GetPedidosPendentes()
+        public async Task<ObservableCollection<PedidoSistemaModel>> GetPedidos(string sdsFiltro, DateTime ddtIni, DateTime ddtFim, bool bboFinalizados = false, bool bboFiltro = false)
         {
             try
             {
-                var sdsUrl = "TFServMCOM/f_get_pedidos_aguardando/"+App.current.EstabSelected.ID_ESTABELECIMENTO;
+                var sdsUrl = "";
+                if (bboFiltro)
+                {
+                    var sdtIni = ddtIni.ToString("yyyyMMdd");
+                    var sdtFim = ddtFim.ToString("yyyyMMdd");
+                    sdsUrl = "TFServMCOM/f_get_pedidos/" + App.current.EstabSelected.ID_ESTABELECIMENTO + "/" + sdsFiltro + "/" + sdtIni + "/" + sdtFim + "/" + bboFinalizados;
+                }
+                else 
+                {
+                    sdsUrl = "TFServMCOM/f_get_pedidos/" + App.current.EstabSelected.ID_ESTABELECIMENTO;
+                }
                 var request = await WSRequest.RequestGET(sdsUrl);
 
                 var json = await request.Content.ReadAsStringAsync();
@@ -68,6 +78,21 @@ namespace SolariPDV.Services
                 foreach (var it in pedidoIntegracao.itens) pedidoRetorno.Add(it);
 
                 return pedidoRetorno;
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        internal async Task FinalizarPedido(PedidoModel pedidoAtual)
+        {
+            try
+            {
+                var json = JsonConvert.SerializeObject(pedidoAtual.GetPedidoIntegracao());
+
+                var sdsUrl = "TFServMCOM/p_gera_pedido/";
+                var request = await WSRequest.RequestPOST(sdsUrl, json);
             }
             catch
             {

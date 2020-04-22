@@ -48,11 +48,14 @@ namespace SolariPDV.Views
 
         private void lstViewPedido_ItemTapped(object sender, ItemTappedEventArgs e)
         {
+            (sender as ListView).SelectedItem = null;
+
             if (e.Item == null) return;
             var item = (e.Item as ItemPedidoModel);
             if (item.BO_RELACIONADO) return;
+            if (!item.FL_PERMITEADICIONAL) return;
 
-            Navigation.PushAsync(new ItemAdicionalPage(item));
+            Navigation.PushAsync(new ItemAdicionalPage(item));          
         }
     }
 }

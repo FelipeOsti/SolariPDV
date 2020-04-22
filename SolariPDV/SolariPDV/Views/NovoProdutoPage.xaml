@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:converterspack="clr-namespace:Xamarin.Forms.ConvertersPack;assembly=Xamarin.Forms.ConvertersPack"
+             mc:Ignorable="d"
+             BackgroundColor="White"
+             Title="Novo Produto"
+             x:Class="SolariPDV.Views.NovoProdutoPage">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converterspack:CurrencyConverter x:Key="CurrencyConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    
+   <ContentPage.Content>
+        <StackLayout VerticalOptions="FillAndExpand">
+            <StackLayout Padding="10">
+                <Entry Text="{Binding scdCodigo}" Placeholder="Código do Produto" PlaceholderColor="Silver"/>
+                <Entry Text="{Binding sdsMaterial}" Placeholder="Descrição do Produto" PlaceholderColor="Silver"/>
+                <Label Text="Selecione caso produto seja uma matéria prima."/>
+                <Switch IsToggled="{Binding bboMateriaPrima}" HorizontalOptions="Start"/>
+
+                <Picker ItemsSource="{Binding lstFamilias}" SelectedItem="{Binding familiaSelecionada}" Title="Selecione a Familia do Material" ItemDisplayBinding="{Binding DS_FAMILIA}"/>
+                <Entry Text="{Binding nvlUnitario, Converter={StaticResource CurrencyConverter}}" Placeholder="Unitário do Produto" PlaceholderColor="Silver"/>
+
+                <Entry Text="{Binding nvlCusto, Converter={StaticResource CurrencyConverter}}" Placeholder="Custo do Produto" PlaceholderColor="Silver"/>
+
+                <Entry Text="{Binding nqtInicial}" Keyboard="Numeric" Placeholder="Quantidade em Estoque" PlaceholderColor="Silver"/>
+            </StackLayout>
+            <Button x:Name="btConfirmar" HorizontalOptions="FillAndExpand" VerticalOptions="EndAndExpand" Text="Confirmar" Clicked="btConfirmar_Clicked" TextColor="White" BackgroundColor="DarkOrange" Margin="-1"/>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

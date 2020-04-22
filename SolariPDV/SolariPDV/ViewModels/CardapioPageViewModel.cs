@@ -7,6 +7,8 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
+using Xamarin.Forms;
 
 namespace SolariPDV.ViewModels
 {
@@ -26,6 +28,14 @@ namespace SolariPDV.ViewModels
         public ObservableCollection<FichaModel> LstFicha { get; set; }
 
         ObservableCollection<CardapioCateg> lstCategoria;
+
+        ICommand _RecuperarCardapioCommand;
+        public ICommand RecuperarCardapioCommand
+        {
+            get { return _RecuperarCardapioCommand; }
+            set { SetValue(ref _RecuperarCardapioCommand, value); }
+        }
+
         public ObservableCollection<CardapioCateg> LstCategoria
         {
             get { return lstCategoria; }
@@ -36,6 +46,7 @@ namespace SolariPDV.ViewModels
         {
             nqtCarac = 0;
             buscarCardapioAsync();
+            RecuperarCardapioCommand = new Command(buscarCardapioAsync);
         }
 
         public void SetCategoria(CardapioCateg categ)
@@ -50,7 +61,7 @@ namespace SolariPDV.ViewModels
         public List<CardapioProd> GetAdicional()
         {
             if (LstCategoria == null) return null;
-            return LstCategoria.FirstOrDefault(c => c.BO_ADICIONAL);
+            return LstCategoria.FirstOrDefault(c => c.FL_ADICIONAL);
         }
 
         public void FiltrarProduto(string sdsFiltro)
@@ -110,17 +121,17 @@ namespace SolariPDV.ViewModels
                 int p = -1;
                 foreach (var it in LstCardapio)
                 {
-                    //if (it.FL_ADICIONAL == "F")
-                    //{
-                        if (!LstCategoria.Any(cat => cat.ID_CATEGORIA == it.ID_CATEGORIA))
+                    if (!LstCategoria.Any(cat => cat.ID_CATEGORIA == it.ID_CATEGORIA))
+                    {
+                        LstCategoria.Add(new CardapioCateg() { ID_CATEGORIA = it.ID_CATEGORIA, DS_CATEGORIA = it.DS_CATEGORIA, FL_ADICIONAL = it.FL_ADICIONAL == "T",FL_ASSAR = it.FL_ASSAR, FL_PERMITEADICIONAL = it.FL_PERMITEADICIONAL == "T"  });
+                        p = -1;
+                        c++;
+                    }
+                    if (!LstCategoria[c].Any(pro => pro.ID_MATERIAL == it.ID_MATERIAL))
+                    {
+                        var sds_ficha = "";
+                        if (LstFicha != null)
                         {
-                            LstCategoria.Add(new CardapioCateg() { ID_CATEGORIA = it.ID_CATEGORIA, DS_CATEGORIA = it.DS_CATEGORIA, BO_ADICIONAL = it.FL_ADICIONAL == "T" });
-                            p = -1;
-                            c++;
-                        }
-                        if (!LstCategoria[c].Any(pro => pro.ID_MATERIAL == it.ID_MATERIAL))
-                        {
-                            var sds_ficha = "";
                             foreach (var ficha in LstFicha)
                             {
                                 if (ficha.ID_MATERIAL == it.ID_MATERIAL)
@@ -131,34 +142,35 @@ namespace SolariPDV.ViewModels
                                         sds_ficha = sds_ficha + ", " + ficha.DS_MATERIAL;
                                 }
                             }
-
-                            LstCategoria[c].Add(new CardapioProd()
-                            {
-                                ID_MATERIAL = it.ID_MATERIAL,
-                                DS_MATERIAL = it.DS_MATERIAL,
-                                DS_FICHA = sds_ficha,
-                                lstFicha = LstFicha.Where(f => f.ID_MATERIAL == it.ID_MATERIAL)
-                            });
-                            p++;
                         }
-                        if (!LstCategoria[c][p].Any(t => t.ID_TAMANHO == it.ID_TAMANHO))
+
+                        LstCategoria[c].Add(new CardapioProd()
                         {
-                            if (String.IsNullOrEmpty(it.DS_TAMANHO))
-                            {
-                                it.DS_TAMANHO = "Único";
-                                LstCategoria[c][p].VL_UNITARIO = it.VL_UNITARIO;
-                            }
-                            else
-                                LstCategoria[c][p].VL_UNITARIO = null;
+                            ID_MATERIAL = it.ID_MATERIAL,
+                            DS_MATERIAL = it.DS_MATERIAL,
+                            DS_FICHA = sds_ficha,
+                            lstFicha = LstFicha?.Where(f => f.ID_MATERIAL == it.ID_MATERIAL)
+                        });
+                        p++;
+                    }
 
-                            LstCategoria[c][p].Add(new TamanhoProd()
-                            {
-                                ID_TAMANHO = it.ID_TAMANHO,
-                                VL_UNITARIO = it.VL_UNITARIO,
-                                DS_TAMANHO = it.DS_TAMANHO
-                            });
+                    if (!LstCategoria[c][p].Any(t => t.ID_TAMANHO == it.ID_TAMANHO))
+                    {
+                        if (String.IsNullOrEmpty(it.DS_TAMANHO))
+                        {
+                            it.DS_TAMANHO = "Único";
+                            LstCategoria[c][p].VL_UNITARIO = it.VL_UNITARIO;
                         }
-                    //}
+                        else
+                            LstCategoria[c][p].VL_UNITARIO = null;
+
+                        LstCategoria[c][p].Add(new TamanhoProd()
+                        {
+                            ID_TAMANHO = it.ID_TAMANHO,
+                            VL_UNITARIO = it.VL_UNITARIO,
+                            DS_TAMANHO = it.DS_TAMANHO
+                        });
+                    }
                 }
             }
             catch

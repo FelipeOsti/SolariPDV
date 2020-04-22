@@ -5,7 +5,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:controls="clr-namespace:SuaveControls.Views;assembly=SuaveControls.FloatingActionButton"
              mc:Ignorable="d"
-             Title="Cardápio"
+             Title="Lista de Produtos"
              x:Class="SolariPDV.Views.CardapioPage">
     
     <RelativeLayout x:Name="relativeCardapio">
@@ -15,7 +15,10 @@
             <ListView x:Name="lstViewCardapio"
                       HasUnevenRows="True"
                       VerticalOptions="FillAndExpand"
+                      CachingStrategy="RetainElement"
                       BackgroundColor="White"
+                      IsPullToRefreshEnabled="True"
+                      RefreshCommand="{Binding RecuperarCardapioCommand}"
                       ItemTapped="lstViewCardapio_ItemTapped"
                       ItemsSource="{Binding LstCardapioProd}"
                       IsRefreshing="{Binding IsBusy}"

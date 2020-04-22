@@ -16,6 +16,8 @@ namespace SolariPDV.Models
         public string DS_TAMANHO { get; set; }
         public double? VL_UNITARIO { get; set; }
         public string FL_ADICIONAL { get; set; }
+        public string FL_PERMITEADICIONAL { get; set; }
+        public bool FL_ASSAR { get; set; }
         public string DS_FICHA { get; set; }
     }
 
@@ -23,7 +25,9 @@ namespace SolariPDV.Models
     {
         public long ID_CATEGORIA { get; set; }
         public string DS_CATEGORIA { get; set; }
-        public bool BO_ADICIONAL { get; set; }
+        public bool FL_ADICIONAL { get; set; }
+        public bool FL_PERMITEADICIONAL { get; set; }
+        public bool FL_ASSAR { get; set; }
     }
 
     public class CardapioProd : List<TamanhoProd>

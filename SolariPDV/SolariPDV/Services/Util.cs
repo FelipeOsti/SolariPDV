@@ -57,6 +57,7 @@ namespace SolariPDV.Services
                 texto = texto.Replace("u00D1", "Ñ");
                 texto = texto.Replace("u0026", "&");
                 texto = texto.Replace("u0027", "'");
+                texto = texto.Replace("u2013", "-");
 
                 return texto;
             }

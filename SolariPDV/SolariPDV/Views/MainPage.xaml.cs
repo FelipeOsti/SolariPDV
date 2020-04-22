@@ -6,7 +6,7 @@ using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 using SolariPDV.Models;
-
+using SolariPDV.GradientView;
 
 namespace SolariPDV.Views
 {
@@ -33,10 +33,10 @@ namespace SolariPDV.Views
                 switch (id)
                 {
                     case (int)MenuItemType.Estoque:
-                        MenuPages.Add(id, new NavigationPage(new EstoquePage()) { BarBackgroundColor = Color.White, BarTextColor = Color.DarkGray});
+                        MenuPages.Add(id, new NavigationGradient(new EstoquePage()) { BarTextColor = Color.White});
                         break;
                     case (int)MenuItemType.PedidoPDV:
-                        MenuPages.Add(id, new NavigationPage(new VerPedidosPage()) { BarBackgroundColor = Color.White, BarTextColor = Color.DarkGray });
+                        MenuPages.Add(id, new NavigationGradient(new VerPedidosPage()) { BarTextColor = Color.White });
                         break;
                 }
             }

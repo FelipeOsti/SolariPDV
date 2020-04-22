@@ -16,9 +16,17 @@ namespace SolariPDV.ViewModels
         CardapioProd itemCardapio;
         public CardapioProd ItemCardapio { get { return itemCardapio; } set { SetValue(ref itemCardapio, value); } }
 
+
+        bool _bboCarac;
+        public bool bboCarac { get { return _bboCarac; } set { SetValue(ref _bboCarac, value); } }
+
+        bool _bboAssar;
+        public bool bboAssar { get { return _bboAssar; } set { SetValue(ref _bboAssar, value); } }
+
         public AdicionarItemViewModel(CardapioProd _item)
         {
             ItemCardapio = _item;
+            bboAssar = Views.CardapioPage.current.CategoriaSelectionada.FL_ASSAR;
             GetCarac();
         }
 
@@ -33,6 +41,9 @@ namespace SolariPDV.ViewModels
             var carac = await logic.GetCarac(ItemCardapio.ID_MATERIAL);
 
             LstCarac = JsonConvert.DeserializeObject<ObservableCollection<CaracModel>>(carac);
+
+            bboCarac = false;
+            if (LstCarac?.Count > 0) bboCarac = true;
         }
     }
     

@@ -4,7 +4,7 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
-             Title="Adicionando o Produto"
+             Title="Adicionando o Pedido"
              BackgroundColor="White"
              x:Class="SolariPDV.Views.AdicionarItemPage">
     <ContentPage.Content>
@@ -51,7 +51,7 @@
                       BackgroundColor="White"
                       SeparatorVisibility="None">
                 <ListView.Header>
-                    <Label Text="Selecione uma Caracteristica do Produto" HorizontalOptions="Center" FontAttributes="Bold"/>
+                    <Label Text="Selecione uma Caracteristica do Produto" HorizontalOptions="Center" FontAttributes="Bold" IsVisible="{Binding bboCarac}"/>
                 </ListView.Header>
                 <ListView.ItemTemplate>
                     <DataTemplate>
@@ -63,7 +63,7 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-            <StackLayout Padding="10">
+            <StackLayout Padding="10" IsVisible="{Binding bboAssar}">
                 <Label Text="Assar o produto adicionado? (Pizzas / Massas)"/>
                 <Switch x:Name="bboAssar" HorizontalOptions="Start"  IsToggled="False" OnColor="DarkOrange" ThumbColor="DarkBlue"/>
             </StackLayout>

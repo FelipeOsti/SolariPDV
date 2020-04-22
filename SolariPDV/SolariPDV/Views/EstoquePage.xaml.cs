@@ -1,55 +1,62 @@
 ﻿
+using FormsCurvedBottomNavigation;
 using Newtonsoft.Json;
 using SolariPDV.Models;
 using SolariPDV.Services;
+using SolariPDV.ViewModels;
+using SolariPDV.Views.Estoque;
 using System;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 namespace SolariPDV.Views
 {
-    [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class EstoquePage : ContentPage
+    [DesignTimeVisible(false)]
+    public partial class EstoquePage : CurvedBottomTabbedPage //ContentPage
     {
-
-        public ObservableCollection<EstoqueModel> lstEstoque = new ObservableCollection<EstoqueModel>();
-
         public EstoquePage()
         {
             InitializeComponent();
+            IniciarPaginas();
         }
 
-        public async void btScanClicked(object sender, EventArgs e)
+        private void IniciarPaginas()
         {
-            var scanner = DependencyService.Get<IQrCodeScanningService>();
-            var result = await scanner.ScanAsync();
-            if (!string.IsNullOrEmpty(result))
+            this.Children.Add(new EstoqueConsultaPage(false)
             {
-                lstEstoque = await BuscarEstoque(result);
-                listViewEstoque.ItemsSource = lstEstoque;
-                lblMsg.IsVisible = false;
-            }
-            else
+                Title = "Estoque",
+                IconImageSource = "estoque"
+            });
+            this.Children.Add(new MovimentacaoEstoquePage()
             {
-                lblMsg.IsVisible = true;
-            }
+                Title = "Movimentar",
+                IconImageSource = "movimentacao"
+            });
+            this.Children.Add(new FamiliaEstoquePage()
+            {
+                Title = "Família",
+                IconImageSource = "familia"
+            });
+            this.Children.Add(new EstoqueConsultaPage(true)
+            {
+                Title = "Ler Barra",
+                IconImageSource = "camera"
+            });
         }
 
-        private async void btMovimentarEstoque(object sender, EventArgs e)
+        private void CurvedBottomTabbedPage_FabIconClicked(object sender, EventArgs e)
         {
-            await DisplayAlert("Novo", "Em breve", "OK");
+            Navigation.PushAsync(new NovoProdutoPage());
         }
 
-        private async Task<ObservableCollection<EstoqueModel>> BuscarEstoque(string scdCodigo)
+        public void btScanClicked(object sender, EventArgs e)
         {
-            EstoqueLogic el = new EstoqueLogic();
-            string estoque = await el.GetEstoque(scdCodigo);
-
-            ObservableCollection<EstoqueModel> retorno = JsonConvert.DeserializeObject<ObservableCollection<EstoqueModel>>(estoque);
-
-            return retorno;
+            //estoqueViewModel.EscanearCodigoBarrasCommand.Execute(null);
         }
+        
     }
 }

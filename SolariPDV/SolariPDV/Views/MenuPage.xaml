@@ -5,6 +5,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:controls="clr-namespace:ImageCircle.Forms.Plugin.Abstractions;assembly=ImageCircle.Forms.Plugin"
              mc:Ignorable="d"
+             BackgroundColor="White"
              x:Class="SolariPDV.Views.MenuPage"
              Title="Menu">
              
@@ -40,6 +41,7 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
+        <Button x:Name="btSair" Text="Fazer Logout" ImageSource="logout.png" Clicked="btSair_Clicked" HorizontalOptions="FillAndExpand"  BackgroundColor="Transparent" TextColor="DarkOrange"/>
     </StackLayout>
 
 </ContentPage>

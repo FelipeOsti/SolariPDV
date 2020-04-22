@@ -1,4 +1,5 @@
-﻿using SolariPDV.Models;
+﻿using SolariPDV.GradientView;
+using SolariPDV.Models;
 using SolariPDV.Services;
 using System;
 using System.Collections.Generic;
@@ -29,7 +30,7 @@ namespace SolariPDV.Views
 
             ListViewMenu.ItemsSource = menuItems;
 
-            ListViewMenu.SelectedItem = menuItems[0];
+            //ListViewMenu.SelectedItem = menuItems[0];
             ListViewMenu.ItemSelected += async (sender, e) =>
             {
                 if (e.SelectedItem == null)
@@ -64,6 +65,12 @@ namespace SolariPDV.Views
             var estab = (picker.SelectedItem as EstabelecimentoModel);
 
             App.current.EstabSelected = estab;
+        }
+
+        private void btSair_Clicked(object sender, EventArgs e)
+        {
+            App.current.limparLogin();
+            App.current.MainPage = new NavigationGradient(new LoginPage());
         }
     }
 }

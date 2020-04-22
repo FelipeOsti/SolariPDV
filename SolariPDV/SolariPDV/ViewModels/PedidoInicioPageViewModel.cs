@@ -13,6 +13,8 @@ namespace SolariPDV.ViewModels
         PedidoSistemaModel pedidoSistema;
         public PedidoSistemaModel PedidoSistema{ get { return pedidoSistema; } set { SetValue(ref pedidoSistema, value); } }
 
+        bool _bboTemMesa;
+        public bool bboTemMesa { get { return _bboTemMesa; } set { SetValue(ref _bboTemMesa, value); } }
         public void SetPedidoSistema(PedidoSistemaModel _ped)
         {
             PedidoSistema = _ped;

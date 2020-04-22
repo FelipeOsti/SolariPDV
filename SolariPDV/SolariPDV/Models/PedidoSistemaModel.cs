@@ -13,6 +13,7 @@ namespace SolariPDV.Models
         public double VL_TOTAL { get; set; }
         public long ID_MESA { get; set; }
         public string DS_MESA { get; set; }
+        public string DT_EMISSAO { get; set; }
 
         public string DS_VLTOTAL
         {

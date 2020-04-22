@@ -13,5 +13,7 @@ namespace SolariPDV.Models
         public string DS_MESA { get; set; }
         public string DS_TELEFONE { get; set; }
         public List<ItemPedidoModel> itens { get; set; }
+        public string DS_FORMALIQ { get; internal set; }
+        public double VL_PAGO { get; internal set; }
     }
 }

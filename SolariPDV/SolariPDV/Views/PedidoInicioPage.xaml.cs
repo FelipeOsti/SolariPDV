@@ -10,6 +10,7 @@ using SolariPDV.Logic;
 using SolariPDV.Models;
 using Newtonsoft.Json;
 using SolariPDV.Services;
+using SolariPDV.ViewModels;
 
 namespace SolariPDV.Views
 {
@@ -18,6 +19,7 @@ namespace SolariPDV.Views
     {
         public static List<CardapioModel> Cardapio = new List<CardapioModel>();
         public static List<CardapioCateg> Categorias;
+        PedidoInicioPageViewModel pedidoInicioViewModel;
 
         public PedidoInicioPage()
         {
@@ -28,7 +30,7 @@ namespace SolariPDV.Views
 
         private void IniciarInformacoes()
         {
-            //lblHora.Text = DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss");            
+            BindingContext = pedidoInicioViewModel = new PedidoInicioPageViewModel();          
             GetMesas();
             GetCategorias();
         }
@@ -55,6 +57,44 @@ namespace SolariPDV.Views
                 nomeCliente.IsEnabled = true;
                 nrTelefone.Text = Pedido.PedidoAtual.DS_TELEFONE;
             }
+
+            ToolbarItem item = new ToolbarItem
+            {
+                Text = "Pagamento",
+                Order = ToolbarItemOrder.Primary,
+                Priority = 0
+            };
+            item.Command = new Command(FinalizaPedido);
+
+            // "this" refers to a Page object
+            this.ToolbarItems.Add(item);
+        }
+
+        private async void FinalizaPedido()
+        {
+            try
+            {
+                string action = await DisplayActionSheet("Forma de Pagamento", "Cancelar", null, "Dinheiro", "Crédito", "Débito");
+                if (action == "Cancelar") return;
+
+                string result = await DisplayPromptAsync("Valor Pago", "Valor do Pedido: "+Pedido.PedidoAtual.DS_VLPEDIDO, keyboard: Keyboard.Numeric, placeholder:""+ Pedido.PedidoAtual.VL_PEDIDO);
+                if (string.IsNullOrEmpty(result)) return;
+
+                Pedido.PedidoAtual.DS_FORMALIQ = action;
+                Pedido.PedidoAtual.VL_PAGO = Double.Parse(result);
+
+                await Navigation.PopToRootAsync();
+                VerPedidosPage.current.pedidoViewModel.IsBusy = true;
+
+                PedidoLogic pl = new PedidoLogic();
+                await pl.FinalizarPedido(Pedido.PedidoAtual);
+                
+                VerPedidosPage.current.pedidoViewModel.GetPedidosCommand.Execute(null);
+            }
+            catch
+            {
+                DisplayAlert("Ops", "Falha ao finalizar Pedido", "Tentar novamente");
+            }
         }
 
         private async void GetMesas()
@@ -62,6 +102,10 @@ namespace SolariPDV.Views
             var mesaLogic = new MesaLogic();
             var lstMesas = await mesaLogic.getMesas();
             nrMesa.ItemsSource = lstMesas;
+            if (lstMesas?.Count > 0)
+                pedidoInicioViewModel.bboTemMesa = true;
+            else
+                pedidoInicioViewModel.bboTemMesa = false;
         }
 
         private async void GetCategorias()
@@ -72,7 +116,7 @@ namespace SolariPDV.Views
             Cardapio.Sort((x, y) => x.ID_CATEGORIA.CompareTo(y.ID_CATEGORIA));
             foreach (var item in Cardapio)
             {
-                if (ultimo != item.ID_CATEGORIA) Categorias.Add(new CardapioCateg() { ID_CATEGORIA = item.ID_CATEGORIA, DS_CATEGORIA = item.DS_CATEGORIA });
+                if (ultimo != item.ID_CATEGORIA) Categorias.Add(new CardapioCateg() { ID_CATEGORIA = item.ID_CATEGORIA, DS_CATEGORIA = item.DS_CATEGORIA, FL_ADICIONAL = item.FL_ADICIONAL == "T", FL_ASSAR = item.FL_ASSAR, FL_PERMITEADICIONAL = item.FL_PERMITEADICIONAL == "T" });
                 ultimo = item.ID_CATEGORIA;
             }
             lstView.ItemsSource = Categorias;

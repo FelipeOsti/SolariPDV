@@ -3,16 +3,49 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:controls="clr-namespace:SuaveControls.Views;assembly=SuaveControls.FloatingActionButton"
+             xmlns:controls="clr-namespace:SuaveControls.Views;assembly=SuaveControls.FloatingActionButton" xmlns:pancakeview="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
              Title="Pedidos Pendentes"
              mc:Ignorable="d"
              x:Class="SolariPDV.Views.VerPedidosPage">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem x:Name="btBusca" IconImageSource="search.png" Clicked="btBusca_Clicked"/>
+    </ContentPage.ToolbarItems>
+
     <RelativeLayout>
-        <StackLayout BackgroundColor="White">
+        <StackLayout RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}"
+                     RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=1}" BackgroundColor="White">
+            <StackLayout IsVisible="{Binding bboSearch}" Padding="5">
+                <pancakeview:PancakeView Elevation="1" Padding="20" CornerRadius="10">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="18"/>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        
+                        <SearchBar x:Name="filtroPedido" Grid.ColumnSpan="2" Placeholder="Filtrar pedidos" Text="{Binding sdsFiltro}" Margin="-20,0,-20,0"/>
+                        <Label Grid.Row="1" Text="Data Inicial"/>
+                        <DatePicker Grid.Row="2" Date="{Binding ddtInicial}"/>
+
+                        <Label Grid.Row="1" Grid.Column="1" Text="Data Final"/>
+                        <DatePicker Grid.Row="2" Grid.Column="1" Date="{Binding ddtFinal}"/>
+
+                        <Label Grid.Row="3" Text="Ver pedidos Finalizados?" VerticalOptions="Center"/>
+                        <Switch Grid.Row="3" Grid.Column="1" IsToggled="{Binding bboFinalizados}" HorizontalOptions="Start"/>
+
+                        <Button Grid.Row="4" x:Name="btBuscar" Grid.Column="1" HorizontalOptions="FillAndExpand" Text="Buscar Pedidos" BackgroundColor="Transparent" TextColor="DarkOrange" Clicked="btBuscar_Clicked"/>
+                    </Grid>
+                </pancakeview:PancakeView>
+            </StackLayout>
+
             <ListView x:Name="lstViewPedidos"
                       HasUnevenRows="True"
                       VerticalOptions="FillAndExpand"
                       BackgroundColor="White"
+                      IsPullToRefreshEnabled="True"
+                      RefreshCommand="{Binding GetPedidosCommand}"
                       ItemTapped="lstViewPedidos_ItemTapped"
                       ItemsSource="{Binding LstPedidos}"
                       IsRefreshing="{Binding IsBusy}"
@@ -24,17 +57,25 @@
                                 <StackLayout Orientation="Horizontal">
                                     <Label Text="Pedido: "/>
                                     <Label Text="{Binding ID_PEDIDO}" FontSize="16" FontAttributes="Bold" VerticalOptions="Center"/>
+
+                                    <Label Text="{Binding DT_EMISSAO}" WidthRequest="90" HorizontalOptions="EndAndExpand"/>
                                 </StackLayout>
                                 <StackLayout Orientation="Horizontal">
                                     <Label Text="{Binding DS_RAZAO}" FontSize="14" HorizontalOptions="FillAndExpand"/>
                                     <Label Text="{Binding DS_VLTOTAL}" FontSize="14" HorizontalOptions="EndAndExpand" WidthRequest="90"/>
                                 </StackLayout>
                                 <Label Text="{Binding DS_SITDOCTO}" FontSize="10"/>
+                                <BoxView BackgroundColor="Silver" HeightRequest="1" HorizontalOptions="FillAndExpand"/>
                             </StackLayout>
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
+
+            <StackLayout VerticalOptions="EndAndExpand" Padding="10">
+                <Label Text="Total R$ dos pedidos"/>
+                <Label Text="{Binding sVL_TOTAL}" FontAttributes="Bold" TextColor="DarkBlue"/>
+            </StackLayout>
         </StackLayout>
         <controls:FloatingActionButton x:Name="FABButton" HorizontalOptions="CenterAndExpand" WidthRequest="80" HeightRequest="90"
                                        VerticalOptions="CenterAndExpand" Clicked="FABButton_Clicked"
@@ -44,7 +85,7 @@
 
         <controls:FloatingActionButton x:Name="FABButtonMesas" HorizontalOptions="CenterAndExpand" WidthRequest="80" HeightRequest="90"
                                        VerticalOptions="CenterAndExpand" Clicked="FABButtonMesas_Clicked"
-                                       Image="mesa.png" ButtonColor="DarkOrange"                                       
+                                       Image="mesa.png" ButtonColor="DarkOrange" IsVisible="{Binding bboMesas}"                                      
                                        RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1, Constant=-80}"  
                                        RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=1, Constant=-160}" />
     </RelativeLayout>

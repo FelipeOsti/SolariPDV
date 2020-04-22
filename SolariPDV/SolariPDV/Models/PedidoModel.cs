@@ -75,6 +75,9 @@ namespace SolariPDV.Models
             }
         }
 
+        public string DS_FORMALIQ { get; internal set; }
+        public double VL_PAGO { get; internal set; }
+
         internal PedidoIntegracaoModel GetPedidoIntegracao()
         {
             var ped = new PedidoIntegracaoModel() {
@@ -84,6 +87,8 @@ namespace SolariPDV.Models
                 DS_MESA = DS_MESA,
                 DS_TELEFONE = DS_TELEFONE,
                 ID_PEDIDO = ID_PEDIDO,
+                DS_FORMALIQ = DS_FORMALIQ,
+                VL_PAGO = VL_PAGO,
                 itens = new List<ItemPedidoModel>()
             };
 
@@ -108,7 +113,8 @@ namespace SolariPDV.Models
         public double QT_PEDIDO { get; set; }
         public Boolean  BO_RELACIONADO { get; set; }
         public Boolean BO_ASSAR { get; set; }
-        public double? VL_TOTAL { get { return VL_UNITARIO * QT_PEDIDO; }  }
+        public double? VL_TOTAL { get { return (VL_UNITARIO * QT_PEDIDO) - VL_DESCONTO; }  }
+        public double? VL_DESCONTO { get; set; }
         public string DS_VLTOTAL
         {
             get
@@ -122,9 +128,11 @@ namespace SolariPDV.Models
         public bool bboMostraQtde { get { return !BO_RELACIONADO; } }
 
         public ObservableCollection<FichaModel> lstFicha { get; internal set; }
+        public bool FL_PERMITEADICIONAL { get; internal set; }
 
         internal void AdicionarFicha(IEnumerable<FichaModel> _lst)
         {
+            if (_lst == null) return;
             if (lstFicha == null) lstFicha = new ObservableCollection<FichaModel>();
 
             foreach (var it in _lst)

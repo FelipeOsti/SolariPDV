@@ -16,7 +16,7 @@
             </StackLayout>
 
             <ActivityIndicator x:Name="indicator" IsVisible="False" IsEnabled="True" IsRunning="True" HorizontalOptions="Center" VerticalOptions="EndAndExpand"/>
-            <Button x:Name="btConfirma" Text="Confirmar" Margin="-1" HorizontalOptions="FillAndExpand" VerticalOptions="EndAndExpand" BackgroundColor="#e0bd02" TextColor="White" Clicked="btConfirma_Clicked"/>
+            <Button x:Name="btConfirma" Text="Confirmar" Margin="-1" HorizontalOptions="FillAndExpand" VerticalOptions="EndAndExpand" BackgroundColor="DarkOrange" TextColor="White" Clicked="btConfirma_Clicked"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

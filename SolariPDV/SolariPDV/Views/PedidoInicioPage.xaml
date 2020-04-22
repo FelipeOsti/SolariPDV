@@ -22,8 +22,8 @@
                                 <RowDefinition Height="35"/>
                                 <RowDefinition Height="35"/>
                             </Grid.RowDefinitions>
-                            <Entry Grid.Column="0" x:Name="qtPessoas" Keyboard="Numeric" Placeholder="Número de Pessoas" FontSize="12" />
-                            <Picker Grid.Column="1" x:Name="nrMesa" Title="Número da Mesa" ItemDisplayBinding="{Binding DS_MESA}" Unfocused="nrMesa_Unfocused" FontSize="12" />
+                            <Entry Grid.Column="0" x:Name="qtPessoas" Keyboard="Numeric" Placeholder="Número de Pessoas" FontSize="12" IsVisible="{Binding bboTemMesa}" />
+                            <Picker Grid.Column="1" x:Name="nrMesa" Title="Número da Mesa" ItemDisplayBinding="{Binding DS_MESA}" Unfocused="nrMesa_Unfocused" FontSize="12" IsVisible="{Binding bboTemMesa}" />
                             <Entry Grid.Column="0" Grid.Row="1" x:Name="nomeCliente" Placeholder="Nome do Cliente" FontSize="12" Unfocused="nomeCliente_Unfocused"/>
                             <Entry Grid.Column="1" Grid.Row="1" x:Name="nrTelefone" Keyboard="Telephone" Placeholder="Número de Telefone" FontSize="12" Unfocused="nrTelefone_Unfocused"/>
                             <!--<Label Grid.Row="1" Grid.Column="0" Text="Data Hora de Emissão:" Margin="5,0"/>
@@ -49,7 +49,7 @@
 
                                         <pancakeview:PancakeView CornerRadius="40,0,40,0" Elevation="10" Grid.Row="0" Grid.RowSpan="4" Grid.Column="1" BackgroundColor="#3a3aa1" VerticalOptions="CenterAndExpand" HorizontalOptions="EndAndExpand">
                                             <StackLayout Orientation="Horizontal" Margin="8">
-                                                <Label Text="Produtos" TextColor="White" VerticalOptions="Center" VerticalTextAlignment="Center" />
+                                                <Label Text="Produtos" TextColor="White" HorizontalOptions="Fill" VerticalOptions="Center" VerticalTextAlignment="Center" />
                                                 <Image WidthRequest="24" HeightRequest="24" Source="ic_forward.png" />
                                             </StackLayout>
                                         </pancakeview:PancakeView>

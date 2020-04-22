@@ -18,10 +18,16 @@ namespace SolariPDV.Views
 
         public static VerPedidosPage current;
         public VerPedidosPage()
-        {
-            BindingContext = pedidoViewModel = new VerPedidosViewModel();
+        {            
             InitializeComponent();
+            BindingContext = pedidoViewModel = new VerPedidosViewModel();
             current = this;
+        }
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            //pedidoViewModel.GetPedidosCommand.Execute(null);
         }
 
         private void lstViewPedidos_ItemTapped(object sender, ItemTappedEventArgs e)
@@ -46,9 +52,15 @@ namespace SolariPDV.Views
             Navigation.PushAsync(new PedidoInicioPage());
         }
 
-        private void CardapioSearchBar_TextChanged(object sender, TextChangedEventArgs e)
+        private void btBusca_Clicked(object sender, EventArgs e)
         {
-            //
+            pedidoViewModel.bboSearch = !pedidoViewModel.bboSearch;
+        }
+
+        private void btBuscar_Clicked(object sender, EventArgs e)
+        {
+            pedidoViewModel.GetPedidosCommand.Execute(null);
+            pedidoViewModel.bboSearch = false;
         }
     }
 }

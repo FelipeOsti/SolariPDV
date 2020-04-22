@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:pancakeview="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView" xmlns:controls="clr-namespace:SuaveControls.Views;assembly=SuaveControls.FloatingActionButton"
+             mc:Ignorable="d"
+             x:Class="SolariPDV.Views.Estoque.FamiliaEstoquePage">
+    <ContentPage.Content>
+        <RelativeLayout>
+            <StackLayout RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}"
+                            RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=1}">
+                <StackLayout VerticalOptions="FillAndExpand">
+                    <ListView x:Name="listViewFamilia" ItemsSource="{Binding lstFamilias}" ItemSelected="listViewFamilia_ItemSelected" IsPullToRefreshEnabled="True" RefreshCommand="{Binding GetFamiliasCommand}" IsRefreshing="{Binding IsBusy, Mode=TwoWay}" VerticalOptions="FillAndExpand" SeparatorVisibility="None" HasUnevenRows="true" BackgroundColor="White">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <ViewCell>
+                                    
+                                    <Grid Padding="10" Margin="10">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="50"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+ 
+                                        <Label Text="{Binding ID_FAMILIA}"/>
+                                        <Label Grid.Column="1" Text="{Binding DS_FAMILIA}"/>
+                                    </Grid>
+  
+                                </ViewCell>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+
+                </StackLayout>
+            </StackLayout>
+
+            <controls:FloatingActionButton x:Name="FABButton" HorizontalOptions="CenterAndExpand" WidthRequest="80" HeightRequest="90"
+                                       VerticalOptions="CenterAndExpand"  Clicked="FABButton_Clicked"
+                                       Image="ic_add_white.png" ButtonColor="DarkOrange"                                       
+                                       RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1, Constant=-80}"  
+                                       RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=1, Constant=-80}" />
+        </RelativeLayout>
+    </ContentPage.Content>
+</ContentPage>
