@@ -23,14 +23,16 @@ namespace SolariPDV.Views
 
             menuItems = new List<HomeMenuItem>
             {
+                new HomeMenuItem {Id = MenuItemType.Inicio, Title="Inicio"},
                 new HomeMenuItem {Id = MenuItemType.Estoque, Title="Consulta de Estoque" },
                 new HomeMenuItem {Id = MenuItemType.PedidoPDV, Title="Pedido PDV" },
-                new HomeMenuItem {Id = MenuItemType.PedidoComercial, Title="Pedido Comercial" }
+                new HomeMenuItem {Id = MenuItemType.PedidoComercial, Title="Pedido Comercial" },
+                new HomeMenuItem {Id = MenuItemType.AcompanharPedido, Title="Acompanhar Pedido" }
             };
 
             ListViewMenu.ItemsSource = menuItems;
 
-            //ListViewMenu.SelectedItem = menuItems[0];
+            ListViewMenu.SelectedItem = menuItems[0];
             ListViewMenu.ItemSelected += async (sender, e) =>
             {
                 if (e.SelectedItem == null)
@@ -65,6 +67,8 @@ namespace SolariPDV.Views
             var estab = (picker.SelectedItem as EstabelecimentoModel);
 
             App.current.EstabSelected = estab;
+
+            InicioPage.current.inicioViewModel.GetDashBoardCommand.Execute(null);
         }
 
         private void btSair_Clicked(object sender, EventArgs e)

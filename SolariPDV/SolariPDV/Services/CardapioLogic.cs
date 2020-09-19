@@ -13,7 +13,7 @@ namespace SolariPDV.Logic
         {
             try
             {
-                var retorno = await (await WSRequest.RequestGET("TFServMMAT/f_get_cardapio/" + sdsFiltro)).Content.ReadAsStringAsync();
+                var retorno = await (await WSRequest.RequestGET("TFServMMAT/f_get_cardapio/"+ App.current.EstabSelected.ID_ESTABELECIMENTO +"/" + sdsFiltro)).Content.ReadAsStringAsync();
 
                 retorno = retorno.Replace(@"\", "").Replace("\"[", "[").Replace("]\"", "]");
 

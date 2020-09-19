@@ -14,6 +14,7 @@ namespace SolariPDV.Models
         public string DS_MATERIAL { get; set; }
         public long ID_SALDOMAT { get; set; }
         public long ID_MATERIAL { get; set; }
+        public string DS_FAMILIA { get; set; }
         public float QT_SALDO { get; set; }
         public float VL_SALDO { get; set; }
         public float VL_UNITAR { get; set; }

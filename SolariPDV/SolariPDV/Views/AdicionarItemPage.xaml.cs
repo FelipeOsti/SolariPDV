@@ -68,6 +68,10 @@ namespace SolariPDV.Views
                     sdsMaterial = CardapioPage.current.CategoriaSelectionada.DS_CATEGORIA + " " + sdsMaterial + " " + tamanho.DS_TAMANHO;
                 }
 
+                double? nvlDesconto = 0;
+                if (addItemViewModel.vlDesconto > 0) nvlDesconto = addItemViewModel.vlDesconto;
+                if (addItemViewModel.txDesconto > 0) nvlDesconto = (qtdItem.Value * tamanho.VL_UNITARIO) * addItemViewModel.txDesconto / 100;
+
                 Pedido.PedidoAtual.Add(new ItemPedidoModel()
                 {
                     DS_MATERIAL = sdsMaterial,
@@ -78,7 +82,8 @@ namespace SolariPDV.Views
                     ID_TAMANHO = tamanho.ID_TAMANHO,
                     QT_PEDIDO = qtdItem.Value,
                     VL_UNITARIO = tamanho.VL_UNITARIO,
-                    FL_PERMITEADICIONAL = CardapioPage.current.CategoriaSelectionada.FL_PERMITEADICIONAL
+                    FL_PERMITEADICIONAL = CardapioPage.current.CategoriaSelectionada.FL_PERMITEADICIONAL,
+                    VL_DESCONTO = nvlDesconto
                 });
                 Pedido.PedidoAtual[Pedido.PedidoAtual.Count - 1].AdicionarFicha(addItemViewModel.ItemCardapio.lstFicha);
 
@@ -96,7 +101,6 @@ namespace SolariPDV.Views
                         BO_RELACIONADO = true
                     });
                 }
-
 
                 await Navigation.PopAsync();
             }

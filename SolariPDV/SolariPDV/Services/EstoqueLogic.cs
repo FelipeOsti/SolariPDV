@@ -56,7 +56,7 @@ namespace SolariPDV.Services
         {
             try
             {
-                await (await WSRequest.RequestGET("TFServMMAT/f_movim_estoque_manual_app/" + App.current.EstabSelected.ID_ESTABELECIMENTO + "/" + nidMater + "/" + nidTpMovim + "/" + nvlMovim + "/" + nqtMovim + "/" + sdsHistorico)).Content.ReadAsStringAsync();
+                await (await WSRequest.RequestGET("TFServMMAT/f_movim_estoque_manual_app/" + App.current.EstabSelected.ID_ESTABELECIMENTO + "/" + nidMater + "/" + nidTpMovim + "/" + nvlMovim.ToString().Replace(".","").Replace(",",".") + "/" + nqtMovim.ToString().Replace(".", "").Replace(",", ".") + "/" + sdsHistorico)).Content.ReadAsStringAsync();
             }
             catch
             {

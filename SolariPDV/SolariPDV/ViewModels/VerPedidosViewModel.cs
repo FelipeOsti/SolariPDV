@@ -32,18 +32,17 @@ namespace SolariPDV.ViewModels
         string _sdsFiltro;
         public string sdsFiltro { get { return _sdsFiltro; } set { SetValue(ref _sdsFiltro, value); } }
 
-        public string sVL_TOTAL
-        { 
+        double _nvlTotal;
+        public double VL_TOTAL {
             get
             {
-                if (lstPedidos == null) return "R$ 0,00";
-                double total = 0;
-                foreach (var ped in lstPedidos) total += ped.VL_TOTAL;
-                return total.ToString("C");
+                return _nvlTotal;                
+            }
+            set
+            {
+                SetValue(ref _nvlTotal, value);
             }
         }
-
-
 
         public VerPedidosViewModel()
         {
@@ -69,6 +68,9 @@ namespace SolariPDV.ViewModels
                 {                                        
                     var pedLogic = new PedidoLogic();
                     LstPedidos = await pedLogic.GetPedidos(sdsFiltro,ddtInicial,ddtFinal,bboFinalizados, bboSearch);
+
+                    VL_TOTAL = 0;
+                    if(LstPedidos != null) foreach (var ped in LstPedidos) VL_TOTAL += ped.VL_TOTAL;
                 }
                 catch
                 {

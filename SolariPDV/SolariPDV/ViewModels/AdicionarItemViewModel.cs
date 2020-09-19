@@ -16,6 +16,13 @@ namespace SolariPDV.ViewModels
         CardapioProd itemCardapio;
         public CardapioProd ItemCardapio { get { return itemCardapio; } set { SetValue(ref itemCardapio, value); } }
 
+        double _txDesconto;
+        public double txDesconto { get { return _txDesconto; } set { SetValue(ref _txDesconto, value);
+                if (value > 0) vlDesconto = 0; } }
+
+        double _vlDesconto;
+        public double vlDesconto { get { return _vlDesconto; } set { SetValue(ref _vlDesconto, value); 
+                if (value > 0) txDesconto = 0; } }
 
         bool _bboCarac;
         public bool bboCarac { get { return _bboCarac; } set { SetValue(ref _bboCarac, value); } }
@@ -28,11 +35,6 @@ namespace SolariPDV.ViewModels
             ItemCardapio = _item;
             bboAssar = Views.CardapioPage.current.CategoriaSelectionada.FL_ASSAR;
             GetCarac();
-        }
-
-        public void SetProduto(CardapioProd _item)
-        {
-            
         }
 
         private async void GetCarac()

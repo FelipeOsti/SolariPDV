@@ -21,8 +21,6 @@ namespace SolariPDV.Views
             InitializeComponent();
 
             MasterBehavior = MasterBehavior.Popover;
-
-           // MenuPages.Add((int)MenuItemType.Browse, (NavigationPage)Detail);
         }
 
 
@@ -32,11 +30,20 @@ namespace SolariPDV.Views
             {
                 switch (id)
                 {
+                    case (int)MenuItemType.Inicio:
+                        MenuPages.Add(id, new NavigationGradient(new InicioPage()) { BarTextColor = Color.White });
+                        break;
                     case (int)MenuItemType.Estoque:
                         MenuPages.Add(id, new NavigationGradient(new EstoquePage()) { BarTextColor = Color.White});
                         break;
                     case (int)MenuItemType.PedidoPDV:
                         MenuPages.Add(id, new NavigationGradient(new VerPedidosPage()) { BarTextColor = Color.White });
+                        break;
+                    case (int)MenuItemType.PedidoComercial:
+                        MenuPages.Add(id, new NavigationGradient(new VerPedidosPage()) { BarTextColor = Color.White });
+                        break;
+                    case (int)MenuItemType.AcompanharPedido:
+                        MenuPages.Add(id, new NavigationGradient(new AcompanharPedidoPage()) { BarTextColor = Color.White });
                         break;
                 }
             }

@@ -12,5 +12,6 @@ namespace SolariPDV.Models
         public long ID_MATERIAL_1 { get; set; }
         public string DS_MATERIAL { get; set; }
         public bool BO_SELECIONA { get; set; }
+        public double QT_QUANTIDADE { get; set; }
     }
 }

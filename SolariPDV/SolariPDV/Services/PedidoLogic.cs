@@ -18,7 +18,7 @@ namespace SolariPDV.Services
                 if (bboFiltro)
                 {
                     var sdtIni = ddtIni.ToString("yyyyMMdd");
-                    var sdtFim = ddtFim.ToString("yyyyMMdd");
+                    var sdtFim = ddtFim.AddDays(1).ToString("yyyyMMdd");
                     sdsUrl = "TFServMCOM/f_get_pedidos/" + App.current.EstabSelected.ID_ESTABELECIMENTO + "/" + sdsFiltro + "/" + sdtIni + "/" + sdtFim + "/" + bboFinalizados;
                 }
                 else 
@@ -78,6 +78,34 @@ namespace SolariPDV.Services
                 foreach (var it in pedidoIntegracao.itens) pedidoRetorno.Add(it);
 
                 return pedidoRetorno;
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        internal async Task<string> FinalizarCozinha(long nidPedido)
+        {
+            try
+            {
+                var sdsUrl = "TFServMCOM/p_finalizar_cozinha/"+ nidPedido;
+                var response = await WSRequest.RequestGET(sdsUrl);
+                return await response.Content.ReadAsStringAsync();
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        internal async Task<string> IniciarCozinha(long nidPedido)
+        {
+            try
+            {
+                var sdsUrl = "TFServMCOM/p_iniciar_cozinha/" + nidPedido;
+                var response = await WSRequest.RequestGET(sdsUrl);
+                return await response.Content.ReadAsStringAsync();
             }
             catch
             {

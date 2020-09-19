@@ -14,9 +14,12 @@
                 <Entry x:Name="entryUsuario" Placeholder="Usuário" />
                 <Entry x:Name="entrySenha" Placeholder="Senha" IsPassword="True" />
             </StackLayout>
+            
+            <Button x:Name="btSemAcesso" Text="Não sou cadastrado" HorizontalOptions="EndAndExpand" Margin="0,-30,10,10" BackgroundColor="Transparent" FontSize="12" TextColor="Gray" Clicked="btSemAcesso_Clicked"/>
 
             <ActivityIndicator x:Name="indicator" IsVisible="False" IsEnabled="True" IsRunning="True" HorizontalOptions="Center" VerticalOptions="EndAndExpand"/>
             <Button x:Name="btConfirma" Text="Confirmar" Margin="-1" HorizontalOptions="FillAndExpand" VerticalOptions="EndAndExpand" BackgroundColor="DarkOrange" TextColor="White" Clicked="btConfirma_Clicked"/>
+            
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

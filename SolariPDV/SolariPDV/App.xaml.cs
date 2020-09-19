@@ -6,6 +6,7 @@ using SolariPDV.Views;
 using SolariPDV.Models;
 using SolariPDV.GradientView;
 using Xamarin.Essentials;
+using System.Diagnostics;
 
 namespace SolariPDV
 {
@@ -13,7 +14,7 @@ namespace SolariPDV
     {
         public static App current;
 
-        public string sdsServidorApp = "18.229.124.3"; // ec2-18-229-119-232.sa-east-1.compute.amazonaws.com";
+        public string sdsServidorApp = "192.168.0.109";//"ec2-18-229-119-232.sa-east-1.compute.amazonaws.com";
         public int nnrPorta = 212;
         public string sdsUsuario;
         public string sdsSenha;
@@ -27,6 +28,8 @@ namespace SolariPDV
             InitializeComponent();
             current = this;
 
+            AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
+
             if (!Preferences.ContainsKey(usuarioKey))
             {
                 MainPage = new NavigationGradient(new LoginPage());
@@ -37,6 +40,11 @@ namespace SolariPDV
                 sdsSenha = Preferences.Get(senhaKey, null);
                 AfterLogin();
             }
+        }
+
+        private void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
+        {
+            Debug.WriteLine((e.ExceptionObject as Exception).Message);
         }
 
         public void AfterLogin()

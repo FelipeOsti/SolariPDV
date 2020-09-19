@@ -1,0 +1,87 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<pages:PopupPage  
+             xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup" 
+             xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:pancakeview="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView" 
+             xmlns:animations="clr-namespace:Rg.Plugins.Popup.Animations;assembly=Rg.Plugins.Popup"
+             mc:Ignorable="d"
+             BackgroundInputTransparent="True"
+             x:Class="SolariPDV.Views.PopUps.AcompanhamentoPedidoPoupUp">
+
+    <pages:PopupPage.Animation>
+        <animations:ScaleAnimation 
+            PositionIn="Center"
+            PositionOut="Center"
+            ScaleIn="1.2"
+            ScaleOut="0.8"
+            DurationIn="400"
+            DurationOut="300"
+            EasingIn="SinOut"
+            EasingOut="SinIn"
+            HasBackgroundAnimation="True"/>
+    </pages:PopupPage.Animation>
+
+    <StackLayout Padding="10" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" >
+        <pancakeview:PancakeView Elevation="30" HasShadow="True" BackgroundColor="#f0f0f0" CornerRadius="5" VerticalOptions="FillAndExpand"  Margin="15">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="20" />
+                    <RowDefinition Height="2" />
+                    <RowDefinition Height="50" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <StackLayout Grid.Row="0" Grid.Column="0" Orientation="Horizontal">
+                    <pancakeview:PancakeView BackgroundColor="Orange" Padding="5" CornerRadius="5,2,2,5">
+                        <Label Text="{Binding Pedido.sdsOrdem}" TextColor="White" />
+                    </pancakeview:PancakeView>
+                    <StackLayout Orientation="Horizontal" Padding="5" HorizontalOptions="FillAndExpand">
+                        <Label Text="{Binding Pedido.DS_RAZAO}" FontAttributes="Bold"/>
+                        <Label Text=" #"/>
+                        <Label Text="{Binding Pedido.ID_PEDIDO}" />
+                        <Label Text="{Binding Pedido.DS_SITDOCTO}" HorizontalOptions="EndAndExpand" Margin="0,0,10,0"/>
+                    </StackLayout>
+                </StackLayout>
+
+                <ListView Grid.Row="1" Grid.Column="0" HorizontalOptions="FillAndExpand" BackgroundColor="#d9d9d9" ItemsSource="{Binding LstItens}"
+                      x:Name="lstViewItens"
+                      HasUnevenRows="True"
+                      VerticalOptions="FillAndExpand"
+                      CachingStrategy="RetainElement"
+                      SeparatorVisibility="None">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <StackLayout Padding="10,5,0,0">
+                                    <Label Text="{Binding DS_MATERIAL}" FontSize="16" FontAttributes="Bold" TextColor="{Binding corMaterial}"/>
+                                    <Label Text="{Binding DS_FICHA}" FontSize="12"  Margin="20,0,0,0"/>
+                                </StackLayout>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+
+                <StackLayout Grid.Row="2" Grid.Column="0" HorizontalOptions="FillAndExpand" Padding="15,0,15,0" Orientation="Horizontal">
+                    <Label Text="{Binding Pedido.DS_VENDEDOR}"/>
+                    <Label Text="{Binding Pedido.DT_PREVENTREGA}" HorizontalOptions="EndAndExpand"/>
+                </StackLayout>
+
+                <BoxView Grid.Row="3" Grid.Column="0" BackgroundColor="#d9d9d9" Margin="3,0,3,0"/>
+
+                <StackLayout Grid.Row="4" Grid.Column="0" HorizontalOptions="Center" Padding="5" Orientation="Horizontal">
+                    <Button Text="{Binding Pedido.sdsBtIniciar}" IsEnabled="{Binding Pedido.bboBtIniciarAtivado}" BackgroundColor="#1cb84c" Margin="0,0,40,0" CornerRadius="5" WidthRequest="100" Clicked="Button_Clicked_1"/>
+                    <Button Text="Voltar" BackgroundColor="#f78b0f" Margin="40,0,0,0" CornerRadius="5" WidthRequest="100" Clicked="Button_Clicked"/>
+                </StackLayout>
+
+            </Grid>
+        </pancakeview:PancakeView>
+    </StackLayout>
+   
+</pages:PopupPage>

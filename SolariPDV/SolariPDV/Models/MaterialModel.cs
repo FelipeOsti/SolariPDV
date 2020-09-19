@@ -6,6 +6,7 @@ namespace SolariPDV.Models
 {
     public class MaterialModel
     {
+        public long ID_MATERIAL { get; set; }
         public string CD_MATERIAL { get; set; }
         public string DS_MATERIAL { get; set; }
         public bool BO_MATERIAPRIMA { get; set; }
@@ -14,6 +15,8 @@ namespace SolariPDV.Models
         public string DS_FAMILIA { get; set; }
         public long ID_ESTABELECIMENTO { get; set; }
         public double QT_INICIAL { get; set; }
+        public double QT_SALDO { get; set; }
+        public int ID_FAMILIA { get; set; }
     }
 
     public class FamiliaModel

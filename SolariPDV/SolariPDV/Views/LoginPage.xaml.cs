@@ -54,5 +54,10 @@ namespace SolariPDV.Views
             }
 
         }
+
+        private void btSemAcesso_Clicked(object sender, EventArgs e)
+        {
+            Navigation.PushAsync(new SemCadastroPage());
+        }
     }
 }

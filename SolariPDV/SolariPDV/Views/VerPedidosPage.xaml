@@ -3,7 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:controls="clr-namespace:SuaveControls.Views;assembly=SuaveControls.FloatingActionButton" xmlns:pancakeview="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+             xmlns:controls="clr-namespace:SuaveControls.Views;assembly=SuaveControls.FloatingActionButton" 
+             xmlns:pancakeview="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
              Title="Pedidos Pendentes"
              mc:Ignorable="d"
              x:Class="SolariPDV.Views.VerPedidosPage">
@@ -16,21 +17,22 @@
         <StackLayout RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}"
                      RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=1}" BackgroundColor="White">
             <StackLayout IsVisible="{Binding bboSearch}" Padding="5">
-                <pancakeview:PancakeView Elevation="1" Padding="20" CornerRadius="10">
+                <pancakeview:PancakeView Elevation="3" Padding="20" CornerRadius="10">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*"/>
                             <RowDefinition Height="18"/>
-                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="35"/>
                             <RowDefinition Height="*"/>
+                            <RowDefinition Height="40"/>
                         </Grid.RowDefinitions>
                         
                         <SearchBar x:Name="filtroPedido" Grid.ColumnSpan="2" Placeholder="Filtrar pedidos" Text="{Binding sdsFiltro}" Margin="-20,0,-20,0"/>
                         <Label Grid.Row="1" Text="Data Inicial"/>
-                        <DatePicker Grid.Row="2" Date="{Binding ddtInicial}"/>
+                        <DatePicker Grid.Row="2" Date="{Binding ddtInicial}" FontSize="14"/>
 
                         <Label Grid.Row="1" Grid.Column="1" Text="Data Final"/>
-                        <DatePicker Grid.Row="2" Grid.Column="1" Date="{Binding ddtFinal}"/>
+                        <DatePicker Grid.Row="2" Grid.Column="1" Date="{Binding ddtFinal}" FontSize="14"/>
 
                         <Label Grid.Row="3" Text="Ver pedidos Finalizados?" VerticalOptions="Center"/>
                         <Switch Grid.Row="3" Grid.Column="1" IsToggled="{Binding bboFinalizados}" HorizontalOptions="Start"/>
@@ -74,7 +76,7 @@
 
             <StackLayout VerticalOptions="EndAndExpand" Padding="10">
                 <Label Text="Total R$ dos pedidos"/>
-                <Label Text="{Binding sVL_TOTAL}" FontAttributes="Bold" TextColor="DarkBlue"/>
+                <Label Text="{Binding VL_TOTAL, StringFormat='{0:C}'}" FontAttributes="Bold" TextColor="DarkBlue"/>
             </StackLayout>
         </StackLayout>
         <controls:FloatingActionButton x:Name="FABButton" HorizontalOptions="CenterAndExpand" WidthRequest="80" HeightRequest="90"

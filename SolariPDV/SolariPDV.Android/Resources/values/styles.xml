@@ -3,6 +3,11 @@
 
   <style name="MainTheme" parent="MainTheme.Base">
   </style>
+
+  <style name="ToolbarTheme" parent="@style/ThemeOverlay.AppCompat.ActionBar">
+    <item name="colorControlNormal">#ffffff</item>
+  </style>
+  
   <!-- Base theme applied no matter what API -->
   <style name="MainTheme.Base" parent="Theme.AppCompat.Light.DarkActionBar">
     <!--If you are using revision 22.1 please use just windowNoTitle. Without android:-->
@@ -26,6 +31,16 @@
     <item name="android:datePickerDialogTheme">@style/AppCompatDialogStyle</item>
   </style>
 
+  <style name="Theme.Splash" parent="android:Theme">
+    <item name="android:windowBackground">@drawable/Splash</item>
+    <item name="android:windowNoTitle">true</item>
+    <item name="android:windowFullscreen">true</item>
+    <item name="colorPrimaryDark">#FF8C00</item>
+    <item name="colorAccent">#ff8c00</item>
+    <item name="android:adjustViewBounds">true</item>
+    <item name="android:scaleType">centerCrop</item>
+  </style>
+  
   <style name="AppCompatDialogStyle" parent="Theme.AppCompat.Light.Dialog">
     <item name="colorAccent">#ff8c00</item>
   </style>

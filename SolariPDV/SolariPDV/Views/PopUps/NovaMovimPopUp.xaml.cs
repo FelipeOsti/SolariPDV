@@ -34,13 +34,7 @@ namespace SolariPDV.Views.PopUps
         private void btConfirmar_Clicked(object sender, EventArgs e)
         {
             novaMovimViewModel.GravarMovim(nidMaterial);
-            CarregarMovimentacao();
             PopupNavigation.Instance.PopAsync();
-        }
-
-        private async void CarregarMovimentacao()
-        {
-            await MovimentacaoEstoquePage.current.movViewModel.BuscarProduto("");
         }
     }
 }

@@ -11,6 +11,7 @@ using SolariPDV.Models;
 using Newtonsoft.Json;
 using SolariPDV.Services;
 using SolariPDV.ViewModels;
+using System.Collections.ObjectModel;
 
 namespace SolariPDV.Views
 {
@@ -26,6 +27,7 @@ namespace SolariPDV.Views
             InitializeComponent();
             IniciarInformacoes();
             Pedido.PedidoAtual = new PedidoModel();
+            this.Title = "Novo Pedido";
         }
 
         private void IniciarInformacoes()
@@ -44,7 +46,7 @@ namespace SolariPDV.Views
 
             if (_ped.ID_MESA > 0)
             {
-                nrMesa.SelectedItem = (nrMesa.ItemsSource as List<MesasModel>).FirstOrDefault(m => m.ID_MESA == _ped.ID_MESA);
+                if(nrMesa.ItemsSource != null) nrMesa.SelectedItem = (nrMesa.ItemsSource as List<MesasModel>).FirstOrDefault(m => m.ID_MESA == _ped.ID_MESA);
                 nomeCliente.IsEnabled = false;
                 nrMesa.IsEnabled = true;
                 nomeCliente.Text = "";
@@ -61,6 +63,7 @@ namespace SolariPDV.Views
             ToolbarItem item = new ToolbarItem
             {
                 Text = "Pagamento",
+                IconImageSource = "payment.png",
                 Order = ToolbarItemOrder.Primary,
                 Priority = 0
             };
@@ -68,6 +71,7 @@ namespace SolariPDV.Views
 
             // "this" refers to a Page object
             this.ToolbarItems.Add(item);
+            this.Title = "Pedido # "+_ped.ID_PEDIDO;
         }
 
         private async void FinalizaPedido()
@@ -99,17 +103,24 @@ namespace SolariPDV.Views
 
         private async void GetMesas()
         {
-            var mesaLogic = new MesaLogic();
-            var lstMesas = await mesaLogic.getMesas();
-            nrMesa.ItemsSource = lstMesas;
-            if (lstMesas?.Count > 0)
-                pedidoInicioViewModel.bboTemMesa = true;
-            else
-                pedidoInicioViewModel.bboTemMesa = false;
+            try
+            {
+                var mesaLogic = new MesaLogic();
+                var lstMesas = await mesaLogic.getMesas();
+                nrMesa.ItemsSource = lstMesas;
+                if (lstMesas?.Count > 0)
+                    pedidoInicioViewModel.bboTemMesa = true;
+                else
+                    pedidoInicioViewModel.bboTemMesa = false;
+
+                if (Pedido.PedidoAtual.ID_MESA > 0) nrMesa.SelectedItem = (nrMesa.ItemsSource as ObservableCollection<MesasModel>).FirstOrDefault(m => m.ID_MESA == Pedido.PedidoAtual.ID_MESA);
+            }
+            catch { }
         }
 
         private async void GetCategorias()
         {
+            pedidoInicioViewModel.IsBusy = true;
             long ultimo = 0;
             Categorias = new List<CardapioCateg>();
             Cardapio = await RecuperaCardapioAsync();
@@ -120,6 +131,7 @@ namespace SolariPDV.Views
                 ultimo = item.ID_CATEGORIA;
             }
             lstView.ItemsSource = Categorias;
+            pedidoInicioViewModel.IsBusy = false;
         }
 
         private async Task<List<CardapioModel>> RecuperaCardapioAsync()

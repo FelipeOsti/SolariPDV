@@ -30,7 +30,8 @@
                                     </Grid.RowDefinitions>
                                     <Label Grid.Column="0" Grid.Row="0" Text="{Binding CD_MATERIAL}" HorizontalOptions="StartAndExpand" WidthRequest="110" FontSize="14"/>
                                     <Label Grid.Column="1" Grid.Row="0" Text="{Binding DS_MATERIAL}" HorizontalOptions="StartAndExpand" FontSize="14"/>
-                                    <Label Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" Text="{Binding DS_ESTABELECIMENTO}" HorizontalOptions="FillAndExpand" FontSize="12"/>
+                                    <Label Grid.Column="0" Grid.Row="1" Text="{Binding DS_FAMILIA}" HorizontalOptions="FillAndExpand" FontSize="12"/>
+                                    <Label Grid.Column="1" Grid.Row="1" Text="{Binding DS_ESTABELECIMENTO}" HorizontalOptions="FillAndExpand" FontSize="12"/>
                                     <Label Grid.Column="0" Grid.Row="2" Text="{Binding QT_SALDO}" HorizontalOptions="StartAndExpand" FontSize="14" FontAttributes="Bold" TextColor="{Binding corSaldo}"/>
                                     <Label Grid.Column="1" Grid.Row="2" Text="{Binding svlUnitar}" HorizontalOptions="EndAndExpand" FontSize="14" FontAttributes="Bold" TextColor="{Binding corSaldo}"/>
                                     <BoxView Grid.ColumnSpan="2" Grid.Row="3" BackgroundColor="Silver" HeightRequest="1" HorizontalOptions="FillAndExpand"/>

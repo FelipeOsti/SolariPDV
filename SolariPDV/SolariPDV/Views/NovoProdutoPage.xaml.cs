@@ -1,4 +1,5 @@
-﻿using SolariPDV.ViewModels;
+﻿using SolariPDV.Models;
+using SolariPDV.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,6 +19,14 @@ namespace SolariPDV.Views
         {
             BindingContext = produtoViewModel = new NovoProdutoViewModel();
             InitializeComponent();
+        }
+
+        public NovoProdutoPage(MaterialModel _material)
+        {
+            BindingContext = produtoViewModel = new NovoProdutoViewModel();
+            InitializeComponent();
+
+            produtoViewModel.SetMaterial(_material);
         }
 
         private void btConfirmar_Clicked(object sender, EventArgs e)

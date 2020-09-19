@@ -6,9 +6,11 @@ namespace SolariPDV.Models
 {
     public enum MenuItemType
     {
+        Inicio,
         Estoque,
         PedidoPDV,
-        PedidoComercial
+        PedidoComercial,
+        AcompanharPedido
     }
     public class HomeMenuItem
     {

@@ -20,6 +20,8 @@ namespace SolariPDV.Views
             Title = "Finalização do Pedido";
             lstViewPedido.ItemsSource = Pedido.PedidoAtual;
             btFinalizar.Clicked += BtFinalizar_Clicked;
+
+            nvlTotalPedido.Text = Pedido.PedidoAtual.DS_VLPEDIDO;
         }
 
         private async void BtFinalizar_Clicked(object sender, EventArgs e)
@@ -29,7 +31,7 @@ namespace SolariPDV.Views
                 var pedidoL = new PedidoLogic();
                 var pedido = await pedidoL.SalvarPedido(Pedido.PedidoAtual);
 
-                if(Pedido.PedidoAtual == null)
+                if(Pedido.PedidoAtual == null || pedido == null)
                 {
                     await DisplayAlert("Ops", "Algum problema com seu pedido!", "Tentar novamente!");
                 }

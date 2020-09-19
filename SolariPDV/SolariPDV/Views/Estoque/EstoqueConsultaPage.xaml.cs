@@ -1,4 +1,5 @@
-﻿using SolariPDV.ViewModels;
+﻿using SolariPDV.Models;
+using SolariPDV.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,11 +14,15 @@ namespace SolariPDV.Views.Estoque
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class EstoqueConsultaPage : ContentPage
     {
+        public static EstoqueConsultaPage EstoqueConsultaPageCurrent;
         EstoqueViewModel estoqueViewModel;
+        public static EstoqueModel estoqueSelecionado = null;
+
         private bool bboBarCode;
         private bool bboShowOneTime = false;
         public EstoqueConsultaPage(bool _bboBarCode)
         {
+            EstoqueConsultaPageCurrent = this;
             BindingContext = estoqueViewModel = new EstoqueViewModel();
             bboBarCode = _bboBarCode;
             InitializeComponent();            
@@ -50,7 +55,22 @@ namespace SolariPDV.Views.Estoque
 
         private void listViewEstoque_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
+            if ((sender as ListView).SelectedItem == null) return;
+            estoqueSelecionado = (EstoqueModel)e.SelectedItem;
             (sender as ListView).SelectedItem = null;
+        }
+
+        internal MaterialModel GetMaterialSelecionado()
+        {
+            try
+            {
+                return new MaterialModel()
+                {
+                    ID_MATERIAL = estoqueSelecionado.ID_MATERIAL,
+                    DS_MATERIAL = estoqueSelecionado.DS_MATERIAL
+                };
+            }
+            catch { return null; }
         }
     }
 }

@@ -11,7 +11,7 @@
     <ContentPage.Content>
         <RelativeLayout>
             <StackLayout>
-                <ListView BackgroundColor="White" x:Name="lstView" RowHeight="100" SeparatorVisibility="None" ItemSelected="lstView_ItemSelected">
+                <ListView BackgroundColor="White" x:Name="lstView" IsRefreshing="{Binding IsBusy}" RowHeight="100" SeparatorVisibility="None" ItemSelected="lstView_ItemSelected">
                     <ListView.Header>
                         <Grid Padding="5">
                             <Grid.ColumnDefinitions>

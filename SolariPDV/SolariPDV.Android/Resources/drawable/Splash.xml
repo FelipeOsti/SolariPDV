@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+  <item>
+    <shape android:shape="rectangle" >
+      <gradient
+        android:angle="180"
+        android:centerColor="#ff8c00"
+        android:endColor="#ff6600"
+        android:startColor="#5d4ba6"
+        android:type="linear" />
+    </shape>
+  </item>
+
+  <item>
+    <bitmap
+        android:gravity="center"
+        android:src="@drawable/solarilogoWhite" />
+  </item>
+
+</layer-list>

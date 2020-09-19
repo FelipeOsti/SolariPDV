@@ -56,6 +56,7 @@ namespace SolariPDV.Views
 
                 Pedido.PedidoAtual[Pedido.PedidoAtual.Count - 1].DS_MATERIAL += " / " + ((CardapioProd)e.Item).DS_MATERIAL + " "+ tamanho.DS_TAMANHO;
                 Pedido.PedidoAtual[Pedido.PedidoAtual.Count - 1].DS_MATERIAL = CategoriaSelectionada.DS_CATEGORIA + " " + Pedido.PedidoAtual[Pedido.PedidoAtual.Count - 1].DS_MATERIAL;
+                Pedido.PedidoAtual[Pedido.PedidoAtual.Count - 1].LstPedMater.Add(((CardapioProd)e.Item).ID_MATERIAL);
 
                 Pedido.PedidoAtual[Pedido.PedidoAtual.Count - 1].AdicionarFicha(((CardapioProd)e.Item).lstFicha);
 

@@ -30,18 +30,12 @@ namespace SolariPDV.ViewModels
             try
             {
                 IsBusy = true;
-                try
-                {
-                    EstoqueLogic el = new EstoqueLogic();
-                    var json = await el.GetMovimeEstoque("");
-                    lstMovEstoque = JsonConvert.DeserializeObject<ObservableCollection<MovimEstoqueModel>>(json);
-                }
-                catch { }
-            }
-            finally
-            {
+                EstoqueLogic el = new EstoqueLogic();
+                var json = await el.GetMovimeEstoque("");
+                lstMovEstoque = JsonConvert.DeserializeObject<ObservableCollection<MovimEstoqueModel>>(json);
                 IsBusy = false;
             }
+            catch { }
         }
 
         public async Task BuscarProduto(string texto)

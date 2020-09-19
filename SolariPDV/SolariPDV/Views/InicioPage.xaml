@@ -2,13 +2,55 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:pancakeview="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
              mc:Ignorable="d"
+             xmlns:imageLoading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             xmlns:imageLoadingTransformation="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations" xmlns:converterspack="clr-namespace:Xamarin.Forms.ConvertersPack;assembly=Xamarin.Forms.ConvertersPack"
              Title="Solari Menu"
              x:Class="SolariPDV.Views.InicioPage">
+    
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converterspack:CurrencyConverter x:Key="CurrencyConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+
     <ContentPage.Content>
-        <StackLayout BackgroundColor="White">
-            
-        </StackLayout>
+        <ScrollView>
+            <StackLayout>
+                <pancakeview:PancakeView BackgroundGradientAngle="270" HeightRequest="100" CornerRadius="0,0,0,30">
+                    <pancakeview:PancakeView.BackgroundGradientStops>
+                        <pancakeview:GradientStop Color="#ff6600" Offset="0"/>
+                        <pancakeview:GradientStop Color="#ff8c00" Offset="0.5"/>
+                        <pancakeview:GradientStop Color="#5d4ba6" Offset="1"/>
+                    </pancakeview:PancakeView.BackgroundGradientStops>
+                </pancakeview:PancakeView>
+
+                <pancakeview:PancakeView BackgroundColor="White" HeightRequest="120" Elevation="2" Margin="10,-80,10,0" CornerRadius="10" Padding="10">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="15"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="16"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="16"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.ColumnSpan="2" Text="Vendas do mês" FontSize="12" HorizontalOptions="Center"/>
+                        <Label Grid.ColumnSpan="2" Grid.Row="1" Text="{Binding VL_VENDIDO, Converter={StaticResource CurrencyConverter}}" FontSize="38" FontAttributes="Bold" HorizontalOptions="Center" TextColor="DarkBlue"/>
+
+                        <imageLoading:CachedImage Grid.Row="2" Source="cart.png">
+                            <imageLoading:CachedImage.Transformations>
+                                <imageLoadingTransformation:TintTransformation HexColor="#000055"/>
+                            </imageLoading:CachedImage.Transformations>
+                        </imageLoading:CachedImage>
+                        <Label Grid.Row="2" Grid.Column="1" Text="{Binding QT_ITENS, StringFormat='{0} Itens Vendidos'}" FontAttributes="Bold" FontSize="13"/>
+                    </Grid>
+                </pancakeview:PancakeView>
+            </StackLayout>
+        </ScrollView>
     </ContentPage.Content>
 </ContentPage>
+    
