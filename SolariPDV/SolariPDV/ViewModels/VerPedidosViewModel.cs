@@ -3,6 +3,7 @@ using SolariPDV.Services;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Text;
 using System.Windows.Input;
 using Xamarin.Forms;
@@ -19,6 +20,9 @@ namespace SolariPDV.ViewModels
         
         bool _bboSearch;
         public bool bboSearch { get { return _bboSearch; } set { SetValue(ref _bboSearch, value); } }
+        
+        bool _nenhumPedido;
+        public bool nenhumPedido { get { return _nenhumPedido; } set { SetValue(ref _nenhumPedido, value); } }
 
         DateTime _ddtFinal;
         public DateTime ddtFinal { get { return _ddtFinal; } set { SetValue(ref _ddtFinal, value); } }
@@ -48,9 +52,10 @@ namespace SolariPDV.ViewModels
         {
             bboFinalizados = false;
             bboSearch = false;
-            ddtInicial = DateTime.Now.Date.AddMonths(-1);
+            ddtInicial = DateTime.Now.Date;
             ddtFinal = DateTime.Now.Date;
             sdsFiltro = "";
+            nenhumPedido = false;
 
             IdentificarMesas();            
             GetPedidosCommand = new Command(BuscarInformacoesIniciais);
@@ -67,10 +72,16 @@ namespace SolariPDV.ViewModels
                 try
                 {                                        
                     var pedLogic = new PedidoLogic();
-                    LstPedidos = await pedLogic.GetPedidos(sdsFiltro,ddtInicial,ddtFinal,bboFinalizados, bboSearch);
-
+                    LstPedidos = await pedLogic.GetPedidos(sdsFiltro, ddtInicial, ddtFinal, bboFinalizados, true);
                     VL_TOTAL = 0;
-                    if(LstPedidos != null) foreach (var ped in LstPedidos) VL_TOTAL += ped.VL_TOTAL;
+                    if (LstPedidos != null)
+                    {
+                        nenhumPedido = false;
+                        LstPedidos = new ObservableCollection<PedidoSistemaModel>(LstPedidos.OrderBy(ped => Convert.ToDateTime(string.IsNullOrEmpty(ped.DT_PREVENTREGA) ? DateTime.Now.ToString() : ped.DT_PREVENTREGA)));                        
+                        foreach (var ped in LstPedidos) VL_TOTAL += ped.VL_TOTAL;
+                    }
+                    else
+                        nenhumPedido = true;                    
                 }
                 catch
                 {

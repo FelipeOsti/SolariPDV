@@ -19,6 +19,9 @@ namespace SolariPDV.ViewModels
         public ObservableCollection<PedidoSistemaModel> LstPedidos { get { return _lstPedidos; } set { SetValue(ref _lstPedidos, value); } }
         public System.Timers.Timer timer;
 
+        bool _nenhumPedido;
+        public bool nenhumPedido { get { return _nenhumPedido; } set { SetValue(ref _nenhumPedido, value); } }
+
         public AcompanharPedidoViewModel()
         {
             GetPedidosCommand = new Command(BuscarInformacoesIniciais);
@@ -48,23 +51,16 @@ namespace SolariPDV.ViewModels
                     var pedLogic = new PedidoLogic();
                     LstPedidos = await pedLogic.GetPedidos("", ddtInicial, ddtFinal, false, true);
 
-                    LstPedidos = new ObservableCollection<PedidoSistemaModel>(LstPedidos.Where(ped => string.IsNullOrEmpty(ped.DT_FIMPRODUCAO)).ToList().OrderBy(ped => ped.ID_PEDIDO));
+                    LstPedidos = new ObservableCollection<PedidoSistemaModel>(LstPedidos.Where(ped => string.IsNullOrEmpty(ped.DT_FIMPRODUCAO) &&
+                                                                                                      Convert.ToDateTime(ped.DT_PREVENTREGA) < DateTime.Now.AddMinutes(75))
+                                                                                              .ToList().OrderBy(ped => ped.ID_PEDIDO));
 
                     var i = 1;
                     foreach (var ped in LstPedidos)
                     {
                         ped.sdsOrdem = i + "º";
+                        MontarItems(ped, i);
                         i++;
-                    }
-
-                    foreach (var ped in LstPedidos)
-                    {
-                        ped.itens = await pedLogic.GetItemPedido(ped.ID_PEDIDO);
-                        foreach (var item in ped.itens)
-                        {
-                            var nqtQtde = item.DS_MATERIAL.Substring(0, 5).Trim() == "" ? " " : item.QT_PEDIDO.ToString();
-                            ped.DS_ITENS += nqtQtde + " " + item.DS_MATERIAL + "\n";
-                        }                        
                     }
                 }
                 catch
@@ -74,7 +70,28 @@ namespace SolariPDV.ViewModels
             finally
             {
                 IsBusy = false;
+
+                if (LstPedidos.Count > 0)
+                    nenhumPedido = false;
+                else
+                    nenhumPedido = true;
             }
+        }
+
+        private async void MontarItems(PedidoSistemaModel ped, int index)
+        {
+            try
+            {
+                var pedLogic = new PedidoLogic();
+                ped.itens = await pedLogic.GetItemPedido(ped.ID_PEDIDO);
+                foreach (var item in ped.itens)
+                {
+                    var nqtQtde = item.DS_MATERIAL.Substring(0, 5).Trim() == "" ? " " : item.QT_PEDIDO.ToString();
+                    ped.DS_ITENS += nqtQtde + " " + item.DS_MATERIAL + "\n";
+                }
+                LstPedidos[index - 1] = ped;
+            }
+            catch { }
         }
 
         internal async void IniciarFinalizarPedido(long nidPedido, string sdsAcao)

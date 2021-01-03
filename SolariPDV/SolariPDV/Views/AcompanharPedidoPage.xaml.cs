@@ -36,12 +36,14 @@ namespace SolariPDV.Views
             base.OnAppearing();
             AcompPedidoViewModel.GetPedidosCommand.Execute(null);
             AcompPedidoViewModel.timer.Enabled = true;
+            RKSoftware.XamKeepScreen.KeepScreen.On();
         }
 
         protected override void OnDisappearing()
         {
             base.OnDisappearing();
             AcompPedidoViewModel.timer.Enabled = false;
+            RKSoftware.XamKeepScreen.KeepScreen.Off();
         }
 
         private void Button_Clicked(object sender, EventArgs e)

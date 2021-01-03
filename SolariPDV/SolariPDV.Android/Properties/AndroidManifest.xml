@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="8" android:versionName="1.40" package="com.SolariNegocios.SolariPDV" android:installLocation="auto">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="9" android:versionName="1.41" package="com.SolariNegocios.SolariPDV" android:installLocation="auto">
 	<uses-sdk android:minSdkVersion="21" android:targetSdkVersion="28" />
-	<application android:label="SolariPDV.Android" android:usesCleartextTraffic="true" android:icon="@mipmap/icon"></application>
+	<application android:label="SolariPDV" android:usesCleartextTraffic="true" android:icon="@mipmap/icon"></application>
 	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 </manifest>

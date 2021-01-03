@@ -18,45 +18,66 @@ namespace SolariPDV.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class PedidoInicioPage : ContentPage
     {
-        public static List<CardapioModel> Cardapio = new List<CardapioModel>();
-        public static List<CardapioCateg> Categorias;
-        PedidoInicioPageViewModel pedidoInicioViewModel;
+        public PedidoInicioPageViewModel pedidoInicioViewModel { get; set; }
 
         public PedidoInicioPage()
         {
+            BindingContext = pedidoInicioViewModel = new PedidoInicioPageViewModel();
             InitializeComponent();
             IniciarInformacoes();
             Pedido.PedidoAtual = new PedidoModel();
             this.Title = "Novo Pedido";
+
+            pedidoInicioViewModel.bboTemMesa = false;
+            pedidoInicioViewModel.vlTotal = 0;
+            pedidoInicioViewModel.txtItens = "Nenhum item";
         }
 
         private void IniciarInformacoes()
+        {                     
+            GetMesas();            
+        }
+
+        protected override void OnAppearing()
         {
-            BindingContext = pedidoInicioViewModel = new PedidoInicioPageViewModel();          
-            GetMesas();
-            GetCategorias();
+            pedidoInicioViewModel.GetCategoriasCommand.Execute(null);
+            base.OnAppearing();
+            if (Pedido.PedidoAtual.Count > 0)
+            {
+                pedidoInicioViewModel.vlTotal = Pedido.PedidoAtual.VL_PEDIDO == null ? 0 : Pedido.PedidoAtual.VL_PEDIDO;
+                pedidoInicioViewModel.txtItens = Pedido.PedidoAtual.Count > 1 ? Pedido.PedidoAtual.Count + " itens" : Pedido.PedidoAtual.Count + " item";
+            }
+            else 
+            {
+                pedidoInicioViewModel.vlTotal = 0;
+                pedidoInicioViewModel.txtItens = "Nenhum Item";
+            }
         }
 
         public PedidoInicioPage(PedidoSistemaModel _ped)
         {
+            BindingContext = pedidoInicioViewModel = new PedidoInicioPageViewModel();
             InitializeComponent();
-            IniciarInformacoes();
+            CarregaPedido(_ped);
+            IniciarInformacoes();            
+        }
 
-            Pedido.IniciarPedido(_ped);
+        private async void CarregaPedido(PedidoSistemaModel _ped)
+        {
+            await Pedido.IniciarPedido(_ped);
+            if (_ped.ID_MESA > 0) pedidoInicioViewModel.bboTemMesa = true;
+
+            pedidoInicioViewModel.txtItens = "Nenhum Item";
+            pedidoInicioViewModel.vlTotal = _ped.VL_TOTAL;
+            if (Pedido.PedidoAtual.Count > 0) pedidoInicioViewModel.txtItens = Pedido.PedidoAtual.Count > 1 ? Pedido.PedidoAtual.Count + " itens" : Pedido.PedidoAtual.Count + " item";
 
             if (_ped.ID_MESA > 0)
             {
-                if(nrMesa.ItemsSource != null) nrMesa.SelectedItem = (nrMesa.ItemsSource as List<MesasModel>).FirstOrDefault(m => m.ID_MESA == _ped.ID_MESA);
-                nomeCliente.IsEnabled = false;
-                nrMesa.IsEnabled = true;
-                nomeCliente.Text = "";
+                if (nrMesa.ItemsSource != null) nrMesa.SelectedItem = (nrMesa.ItemsSource as List<MesasModel>).FirstOrDefault(m => m.ID_MESA == _ped.ID_MESA);
             }
             else
             {
-                nrMesa.SelectedItem = null;
-                nomeCliente.Text = _ped.DS_RAZAO;
-                nrMesa.IsEnabled = false;
-                nomeCliente.IsEnabled = true;
+                nomeCliente.Text = _ped.DS_RAZAO;;
                 nrTelefone.Text = Pedido.PedidoAtual.DS_TELEFONE;
             }
 
@@ -69,9 +90,8 @@ namespace SolariPDV.Views
             };
             item.Command = new Command(FinalizaPedido);
 
-            // "this" refers to a Page object
             this.ToolbarItems.Add(item);
-            this.Title = "Pedido # "+_ped.ID_PEDIDO;
+            this.Title = _ped.ID_PEDIDO > 0 ? "Pedido # " + _ped.ID_PEDIDO : "Novo Pedido";
         }
 
         private async void FinalizaPedido()
@@ -97,7 +117,7 @@ namespace SolariPDV.Views
             }
             catch
             {
-                DisplayAlert("Ops", "Falha ao finalizar Pedido", "Tentar novamente");
+                await DisplayAlert("Ops", "Falha ao finalizar Pedido", "Tentar novamente");
             }
         }
 
@@ -108,38 +128,9 @@ namespace SolariPDV.Views
                 var mesaLogic = new MesaLogic();
                 var lstMesas = await mesaLogic.getMesas();
                 nrMesa.ItemsSource = lstMesas;
-                if (lstMesas?.Count > 0)
-                    pedidoInicioViewModel.bboTemMesa = true;
-                else
-                    pedidoInicioViewModel.bboTemMesa = false;
-
                 if (Pedido.PedidoAtual.ID_MESA > 0) nrMesa.SelectedItem = (nrMesa.ItemsSource as ObservableCollection<MesasModel>).FirstOrDefault(m => m.ID_MESA == Pedido.PedidoAtual.ID_MESA);
             }
             catch { }
-        }
-
-        private async void GetCategorias()
-        {
-            pedidoInicioViewModel.IsBusy = true;
-            long ultimo = 0;
-            Categorias = new List<CardapioCateg>();
-            Cardapio = await RecuperaCardapioAsync();
-            Cardapio.Sort((x, y) => x.ID_CATEGORIA.CompareTo(y.ID_CATEGORIA));
-            foreach (var item in Cardapio)
-            {
-                if (ultimo != item.ID_CATEGORIA) Categorias.Add(new CardapioCateg() { ID_CATEGORIA = item.ID_CATEGORIA, DS_CATEGORIA = item.DS_CATEGORIA, FL_ADICIONAL = item.FL_ADICIONAL == "T", FL_ASSAR = item.FL_ASSAR, FL_PERMITEADICIONAL = item.FL_PERMITEADICIONAL == "T" });
-                ultimo = item.ID_CATEGORIA;
-            }
-            lstView.ItemsSource = Categorias;
-            pedidoInicioViewModel.IsBusy = false;
-        }
-
-        private async Task<List<CardapioModel>> RecuperaCardapioAsync()
-        {
-            var cardapioLogic = new CardapioLogic();
-            var lista = await cardapioLogic.GetCardapio("");
-
-            return JsonConvert.DeserializeObject<List<CardapioModel>>(lista);
         }
 
         private void FABButton_Clicked(object sender, EventArgs e)
@@ -158,7 +149,7 @@ namespace SolariPDV.Views
             cardapioPage.SetCateg(categ);
             Navigation.PushAsync(cardapioPage);
             
-            lstView.SelectedItem = null;
+            (sender as ListView).SelectedItem = null;
         }
 
         private void nomeCliente_Unfocused(object sender, FocusEventArgs e)

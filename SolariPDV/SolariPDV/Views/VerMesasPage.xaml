@@ -8,7 +8,7 @@
              x:Class="SolariPDV.Views.VerMesasPage">
    
     <ContentPage.Content>
-        <CollectionView ItemsSource="{Binding LstMesas}" SelectionChanged="CollectionView_SelectionChanged">
+        <CollectionView ItemsSource="{Binding LstMesas}" SelectionMode="Single" SelectionChanged="CollectionView_SelectionChanged">
             <CollectionView.ItemsLayout>
                 <GridItemsLayout Orientation="Horizontal" Span="7" />
             </CollectionView.ItemsLayout>

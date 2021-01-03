@@ -28,6 +28,21 @@ namespace SolariPDV.Views
             current = this;
         }
 
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            if (Pedido.PedidoAtual.Count > 0)
+            {
+                cardapioViewModel.vlTotal = Pedido.PedidoAtual.VL_PEDIDO == null ? 0 : Pedido.PedidoAtual.VL_PEDIDO;
+                cardapioViewModel.txtItens = Pedido.PedidoAtual.Count > 1 ? Pedido.PedidoAtual.Count + " itens" : Pedido.PedidoAtual.Count + " item";
+            }
+            else
+            {
+                cardapioViewModel.vlTotal = 0;
+                cardapioViewModel.txtItens = "Nenhum Item";
+            }
+        }
+
         private async void OnTextChanged(object sender, TextChangedEventArgs e)
         {
             SearchBar searchBar = (SearchBar)sender;

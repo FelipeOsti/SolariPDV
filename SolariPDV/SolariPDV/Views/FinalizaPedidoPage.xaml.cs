@@ -28,6 +28,7 @@ namespace SolariPDV.Views
         {
             try
             {
+                loadingIndicator.IsVisible = true;
                 var pedidoL = new PedidoLogic();
                 var pedido = await pedidoL.SalvarPedido(Pedido.PedidoAtual);
 
@@ -37,7 +38,7 @@ namespace SolariPDV.Views
                 }
                 else
                 {
-                    VerPedidosPage.current.pedidoViewModel.BuscarInformacoesIniciais();
+                    VerPedidosPage.current.pedidoViewModel.GetPedidosCommand.Execute(null);
                     await Navigation.PopToRootAsync();
                     await DisplayAlert("Sucesso", "Pedido Salvo com Sucesso", "Ok");
                 }
@@ -45,6 +46,10 @@ namespace SolariPDV.Views
             catch
             {
                 await DisplayAlert("Falha", "Erro ao salvar pedido", "Ok"); 
+            }
+            finally
+            {
+                loadingIndicator.IsVisible = false;
             }
         }
 

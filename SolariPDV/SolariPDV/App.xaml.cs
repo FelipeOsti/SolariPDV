@@ -14,7 +14,8 @@ namespace SolariPDV
     {
         public static App current;
 
-        public string sdsServidorApp = "192.168.0.109";//"ec2-18-229-119-232.sa-east-1.compute.amazonaws.com";
+        //public string sdsServidorApp = "ec2-18-229-119-232.sa-east-1.compute.amazonaws.com";
+        public string sdsServidorApp = "192.168.0.113";
         public int nnrPorta = 212;
         public string sdsUsuario;
         public string sdsSenha;

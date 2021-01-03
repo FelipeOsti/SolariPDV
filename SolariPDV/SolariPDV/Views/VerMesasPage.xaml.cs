@@ -1,4 +1,5 @@
-﻿using SolariPDV.ViewModels;
+﻿using SolariPDV.Models;
+using SolariPDV.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,9 +22,16 @@ namespace SolariPDV.Views
             InitializeComponent();
         }
 
-        private void CollectionView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private async void CollectionView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            Navigation.PushAsync(new PedidoInicioPage());
+            var collection = (CollectionView)sender;
+            if (collection.SelectedItem == null) return;
+
+            var mesa = (MesasModel)e.CurrentSelection[0];
+            var pedido = await verMesasViewModel.GetPedido(mesa);
+
+            await Navigation.PushAsync(new PedidoInicioPage(pedido));           
+            collection.SelectedItem = null;
         }
     }
 }

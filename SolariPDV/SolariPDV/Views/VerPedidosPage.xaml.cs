@@ -18,28 +18,28 @@ namespace SolariPDV.Views
 
         public static VerPedidosPage current;
         public VerPedidosPage()
-        {            
-            InitializeComponent();
+        {
             BindingContext = pedidoViewModel = new VerPedidosViewModel();
+            InitializeComponent();            
             current = this;
         }
 
         protected override void OnAppearing()
-        {
+        {            
             base.OnAppearing();
             //pedidoViewModel.GetPedidosCommand.Execute(null);
         }
 
         private void lstViewPedidos_ItemTapped(object sender, ItemTappedEventArgs e)
         {
-            if (lstViewPedidos.SelectedItem == null) return;
+            if ((sender as ListView).SelectedItem == null) return;
             if (e.Item == null) return;
 
             var pedido = (PedidoSistemaModel)e.Item;
 
             Navigation.PushAsync(new PedidoInicioPage(pedido));
 
-            lstViewPedidos.SelectedItem = null;
+            (sender as ListView).SelectedItem = null;
         }
 
         private void FABButtonMesas_Clicked(object sender, EventArgs e)
@@ -61,6 +61,11 @@ namespace SolariPDV.Views
         {
             pedidoViewModel.GetPedidosCommand.Execute(null);
             pedidoViewModel.bboSearch = false;
+        }
+
+        private void FABButtonCozinha_Clicked(object sender, EventArgs e)
+        {
+            Navigation.PushAsync(new AcompanharPedidoPage(),true);
         }
     }
 }

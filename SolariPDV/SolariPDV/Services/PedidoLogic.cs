@@ -64,8 +64,11 @@ namespace SolariPDV.Services
                 var request = await WSRequest.RequestPOST(sdsUrl,json);
 
                 var jsonRetorno = await request.Content.ReadAsStringAsync();
-                jsonRetorno = json.Replace(@"\", "").Replace("\"[", "[").Replace("]\"", "]");
-                var pedidoIntegracao = JsonConvert.DeserializeObject<PedidoIntegracaoModel>(Util.StringUnicodeToUTF8(json));
+                jsonRetorno = jsonRetorno.Replace(@"\", "").Replace("\"[", "[").Replace("]\"", "]");
+                jsonRetorno = jsonRetorno.Replace(@"\", "").Replace("\"[", "[").Replace("]\"", "]").Trim('\"');
+                var pedidoIntegracao = JsonConvert.DeserializeObject<PedidoIntegracaoModel>(Util.StringUnicodeToUTF8(jsonRetorno));
+
+                if (pedidoIntegracao.ID_PEDIDO == 0) throw new Exception();
 
                 var pedidoRetorno = new PedidoModel()
                 {
@@ -79,7 +82,7 @@ namespace SolariPDV.Services
 
                 return pedidoRetorno;
             }
-            catch
+            catch (Exception ex)
             {
                 throw;
             }

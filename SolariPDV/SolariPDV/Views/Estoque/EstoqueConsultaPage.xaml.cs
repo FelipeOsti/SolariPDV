@@ -57,7 +57,7 @@ namespace SolariPDV.Views.Estoque
         {
             if ((sender as ListView).SelectedItem == null) return;
             estoqueSelecionado = (EstoqueModel)e.SelectedItem;
-            (sender as ListView).SelectedItem = null;
+            //(sender as ListView).SelectedItem = null;
         }
 
         internal MaterialModel GetMaterialSelecionado()

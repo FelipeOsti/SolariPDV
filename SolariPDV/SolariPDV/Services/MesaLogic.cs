@@ -26,5 +26,25 @@ namespace SolariPDV.Services
             }
             
         }
+
+        public async Task<ObservableCollection<PedidoSistemaModel>> GetPedido(long nidMesa)
+        {
+            try
+            {
+                var sdsUrl = "";
+
+                sdsUrl = "TFServMCOM/f_get_pedido_mesa/" + App.current.EstabSelected.ID_ESTABELECIMENTO + "/" + nidMesa;
+                
+                var request = await WSRequest.RequestGET(sdsUrl);
+
+                var json = await request.Content.ReadAsStringAsync();
+                json = json.Replace(@"\", "").Replace("\"[", "[").Replace("]\"", "]");
+                return JsonConvert.DeserializeObject<ObservableCollection<PedidoSistemaModel>>(Util.StringUnicodeToUTF8(json));
+            }
+            catch
+            {
+                throw;
+            }
+        }
     }
 }

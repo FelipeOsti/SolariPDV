@@ -4,7 +4,7 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:converterspack="clr-namespace:Xamarin.Forms.ConvertersPack;assembly=Xamarin.Forms.ConvertersPack"
              mc:Ignorable="d"
-             Title="Adicionando o Pedido"
+             Title="Adicionando ao Pedido"
              BackgroundColor="White"
              x:Class="SolariPDV.Views.AdicionarItemPage">
 
@@ -17,18 +17,16 @@
 
     <ContentPage.Content>
         <StackLayout VerticalOptions="EndAndExpand">
-            <Grid Padding="10" BackgroundColor="White">
+            <Grid Padding="5" BackgroundColor="White">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="180"/>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="20"/>
+                    <RowDefinition Height="35"/>
                     <RowDefinition Height="35"/>
                 </Grid.RowDefinitions>
-                <Label Grid.Column="0" Grid.Row="0" Text="Quantidade"/>
-                <Label x:Name="labelQtde" Grid.Column="0" Grid.Row="1" FontAttributes="Bold" FontSize="24" />
-                <Stepper Grid.Column="1" Grid.Row="1" x:Name="qtdItem" Value="1" Minimum="1" Increment="1" ValueChanged="qtdItem_ValueChanged"/>
+                <Label x:Name="labelQtde" Grid.Column="0" Grid.Row="0" FontAttributes="Bold" FontSize="24" HorizontalOptions="Center" />
+                <Stepper Grid.Column="0" Grid.Row="1" x:Name="qtdItem" Value="1" Minimum="1" Increment="1" ValueChanged="qtdItem_ValueChanged" Visual="Material" HorizontalOptions="FillAndExpand"/>
             </Grid>
             
             <ListView x:Name="lstViewTamanho"
@@ -71,27 +69,24 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-            <Grid Padding="10" >
+            <Grid Padding="5,0,5,0" >
                 <Grid.RowDefinitions>
                     <RowDefinition Height="15"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="35"/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="1"/>
                     <ColumnDefinition Width="*"/>   
                 </Grid.ColumnDefinitions>
-                <Label Text="Assar o produto adicionado?" IsVisible="{Binding bboAssar}" VerticalTextAlignment="Center"/>
-                <Switch Grid.Row="1" Grid.RowSpan="2" x:Name="bboAssar" HorizontalOptions="Center" IsVisible="{Binding bboAssar}" IsToggled="False" OnColor="DarkOrange" ThumbColor="DarkBlue"/>
+                <Label Text="Assar o produto adicionado?" IsVisible="{Binding bboAssar}" VerticalTextAlignment="Center" FontSize="12"/>
+                <Switch Grid.Row="1" x:Name="bboAssar" HorizontalOptions="Center" IsVisible="{Binding bboAssar}" IsToggled="False" OnColor="DarkOrange" ThumbColor="DarkBlue"/>
 
-                <BoxView Grid.Column="1" Grid.Row="0" Grid.RowSpan="3" IsVisible="{Binding bboAssar}" WidthRequest="1" HeightRequest="80" VerticalOptions="Center" BackgroundColor="Silver" />
+                <BoxView Grid.Column="1" Grid.Row="0" Grid.RowSpan="3"  IsVisible="{Binding bboAssar}" WidthRequest="1" HeightRequest="80" VerticalOptions="Center" BackgroundColor="Silver" />
 
-                <Label  Grid.Column="2" Text="Desconto em R$ ou %" />
-                <Entry x:Name="nvlDesconto"  Grid.Column="2"  Grid.Row="1" Keyboard="Numeric" Text="{Binding vlDesconto, Converter={StaticResource CurrencyConverter}}" Placeholder="Valor do Desconto" PlaceholderColor="Gray" FontSize="12"/>
-                <Entry x:Name="ntxDesconto" Grid.Column="2" Grid.Row="2" Text="{Binding txDesconto}" Keyboard="Numeric" Placeholder="Percentual do Desconto" PlaceholderColor="Gray" FontSize="12"/>
+                <Entry x:Name="nvlDesconto" Visual="Material" Grid.Column="2" Grid.RowSpan="2"  Grid.Row="0" Keyboard="Numeric" Text="{Binding vlDesconto, Converter={StaticResource CurrencyConverter}}" Placeholder="Valor do Desconto" PlaceholderColor="Gray" FontSize="14"/>
             </Grid>
-            <Button x:Name="btAdicionar" HorizontalOptions="FillAndExpand" VerticalOptions="End" Text="Adicionar ao Pedido" TextColor="White" BackgroundColor="DarkOrange" Clicked="btAdicionar_Clicked"/>
+            <Button x:Name="btAdicionar"  HorizontalOptions="FillAndExpand" VerticalOptions="End" Text="Adicionar ao Pedido" TextColor="White" BackgroundColor="DarkOrange" Clicked="btAdicionar_Clicked"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

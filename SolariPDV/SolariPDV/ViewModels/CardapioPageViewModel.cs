@@ -16,6 +16,12 @@ namespace SolariPDV.ViewModels
     {
         public static long nqtCarac = 1;
 
+        string _txtItens;
+        public string txtItens { get { return _txtItens; } set { SetValue(ref _txtItens, value); } }
+
+        private double? _vlTotal;
+        public double? vlTotal { get { return _vlTotal; } set { SetValue(ref _vlTotal, value); } }
+
         CardapioCateg categoriaSelecionada;
         public CardapioCateg CategoriaSelecionada { get { return categoriaSelecionada; } set { SetValue(ref categoriaSelecionada, value); } }
 

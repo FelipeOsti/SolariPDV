@@ -21,7 +21,7 @@ namespace SolariPDV.ViewModels
 
         protected bool SetValue<T>(ref T BackingField, T Value, [CallerMemberName] string PropertyName = null)
         {
-            if (EqualityComparer<T>.Default.Equals(BackingField, Value))
+            if (EqualityComparer<T>.Default.Equals(BackingField, Value) && PropertyName != "IsBusY")
             {
                 return false;
             }

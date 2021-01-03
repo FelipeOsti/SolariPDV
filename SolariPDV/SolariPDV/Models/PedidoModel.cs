@@ -9,6 +9,7 @@ using System.Globalization;
 using System.Linq;
 using System.Numerics;
 using System.Text;
+using System.Threading.Tasks;
 using Xamarin.Forms;
 
 namespace SolariPDV.Models
@@ -17,24 +18,31 @@ namespace SolariPDV.Models
     {
         public static PedidoModel PedidoAtual { get; set; }
 
-        public static async void IniciarPedido(PedidoSistemaModel ped)
+        public static async Task IniciarPedido(PedidoSistemaModel ped)
         {
-            PedidoAtual = new PedidoModel()
+            try
             {
-                ID_PEDIDO = ped.ID_PEDIDO,
-                DS_CLIENTE = ped.DS_RAZAO,
-                ID_MESA = ped.ID_MESA,
-                DS_MESA = ped.DS_MESA,
-            };
+                PedidoAtual = new PedidoModel()
+                {
+                    ID_PEDIDO = ped.ID_PEDIDO,
+                    DS_CLIENTE = ped.DS_RAZAO,
+                    ID_MESA = ped.ID_MESA,
+                    DS_MESA = ped.DS_MESA
+                };
 
-            var pedLogic = new PedidoLogic();
+                var pedLogic = new PedidoLogic();
 
-            var itemPed = await pedLogic.GetItemPedido(ped.ID_PEDIDO);
-            
-            foreach (var item in itemPed)
-            {
-                PedidoAtual.Add(item);
+                var itemPed = await pedLogic.GetItemPedido(ped.ID_PEDIDO);
+
+                if (itemPed != null)
+                {
+                    foreach (var item in itemPed)
+                    {
+                        PedidoAtual.Add(item);
+                    }
+                }
             }
+            catch { }
         }
 
         public static void IncluirItemFilho(string sflTipo, ItemPedidoModel item, int index = 0)
@@ -184,6 +192,20 @@ namespace SolariPDV.Models
             }
         }
         public bool bboMostraQtde { get { return !BO_RELACIONADO; } }
+
+        public bool bboMostraLinha 
+        { 
+            get 
+            {
+                var index = Pedido.PedidoAtual.IndexOf(this);
+                if (index == Pedido.PedidoAtual.Count - 1)
+                    return true;
+                else
+                    if (Pedido.PedidoAtual[index + 1].BO_RELACIONADO) return false;
+
+                return true;
+            }
+        }
 
         public ObservableCollection<FichaModel> lstFicha { get; internal set; }
         public bool FL_PERMITEADICIONAL { get; internal set; }
