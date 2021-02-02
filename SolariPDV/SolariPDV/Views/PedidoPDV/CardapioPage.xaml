@@ -1,0 +1,62 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:controls="clr-namespace:SuaveControls.Views;assembly=SuaveControls.FloatingActionButton" xmlns:pancakeview="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+             mc:Ignorable="d"
+             Title="Lista de Produtos"
+             x:Class="SolariPDV.Views.PedidoPDV.CardapioPage">
+    
+    <RelativeLayout x:Name="relativeCardapio">
+        <StackLayout BackgroundColor="White">
+            <SearchBar x:Name="CardapioSearchBar" TextChanged="OnTextChanged" Placeholder="Filtrar por produto"/>
+            <Label x:Name="lblMetade" Text="Selecione outro sabor para a pizza" HorizontalOptions="Center" FontSize="10" TextColor="DarkRed" IsVisible="False"/>
+            <ListView x:Name="lstViewCardapio"
+                      HasUnevenRows="True"
+                      VerticalOptions="FillAndExpand"
+                      CachingStrategy="RetainElement"
+                      BackgroundColor="White"
+                      IsPullToRefreshEnabled="True"
+                      RefreshCommand="{Binding RecuperarCardapioCommand}"
+                      ItemTapped="lstViewCardapio_ItemTapped"
+                      ItemsSource="{Binding LstCardapioProd}"
+                      IsRefreshing="{Binding IsBusy}"
+                      SeparatorVisibility="None">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout Padding="10">
+                                <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
+                                    <Label Text="{Binding DS_MATERIAL}" FontSize="16" HorizontalOptions="FillAndExpand" LineBreakMode="WordWrap" TextColor="Gray" FontAttributes="Bold"/>
+                                    <Label Text="{Binding DS_VLUNITARIO}" FontSize="16" HorizontalOptions="EndAndExpand" MinimumWidthRequest="90" WidthRequest="90" TextColor="Gray" FontAttributes="Bold"/>
+                                </StackLayout>
+                                <Label Text="{Binding DS_FICHA}" FontSize="11"/>
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+                <ListView.Footer>
+                    <StackLayout HeightRequest="200"/>
+                </ListView.Footer>
+            </ListView>
+        </StackLayout>
+        <controls:FloatingActionButton x:Name="FABButton" HorizontalOptions="CenterAndExpand" WidthRequest="80" HeightRequest="90"
+                                       VerticalOptions="CenterAndExpand"  Clicked="FABButton_Clicked"
+                                       Image="cart.png" ButtonColor="DarkOrange"                                       
+                                       RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1, Constant=-80}"  
+                                       RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=1, Constant=-80}" />
+
+        <pancakeview:PancakeView Elevation="2" x:Name="panelTotal" HorizontalOptions="CenterAndExpand" WidthRequest="150" HeightRequest="52"
+                                       VerticalOptions="CenterAndExpand" CornerRadius="40" BackgroundColor="DarkOrange"
+                                       RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1, Constant=-230}"  
+                                       RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=1, Constant=-61}" >
+            <StackLayout VerticalOptions="Center" >
+                <Label Text="{Binding txtItens}" HorizontalOptions="CenterAndExpand" TextColor="White" FontSize="14" VerticalTextAlignment="Center" FontAttributes="Bold"/>
+                <Label Text="{Binding vlTotal, StringFormat='{0:C}'}" HorizontalOptions="CenterAndExpand" TextColor="White" FontSize="16" VerticalTextAlignment="Center" FontAttributes="Bold"/>
+            </StackLayout>
+        </pancakeview:PancakeView>
+
+    </RelativeLayout>
+
+</ContentPage>

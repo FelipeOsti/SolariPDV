@@ -1,5 +1,8 @@
 ﻿using SolariPDV.Models;
+using SolariPDV.Models.Comercial;
 using SolariPDV.ViewModels;
+using SolariPDV.Views.PedidoComercial;
+using SolariPDV.Views.PedidoPDV;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,13 +18,15 @@ namespace SolariPDV.Views
     public partial class VerPedidosPage : ContentPage
     {
         public VerPedidosViewModel pedidoViewModel;
+        private Pedido.TipoPedido TipoPedido; 
 
         public static VerPedidosPage current;
-        public VerPedidosPage()
+        public VerPedidosPage(Pedido.TipoPedido _tipoPedido)
         {
-            BindingContext = pedidoViewModel = new VerPedidosViewModel();
-            InitializeComponent();            
+            InitializeComponent();
+            BindingContext = pedidoViewModel = new VerPedidosViewModel();                        
             current = this;
+            TipoPedido = _tipoPedido;
         }
 
         protected override void OnAppearing()
@@ -37,7 +42,10 @@ namespace SolariPDV.Views
 
             var pedido = (PedidoSistemaModel)e.Item;
 
-            Navigation.PushAsync(new PedidoInicioPage(pedido));
+            if (TipoPedido == Pedido.TipoPedido.PedidoPDV)
+                Navigation.PushAsync(new PedidoInicioPage(pedido));
+            else
+                Navigation.PushAsync(new PedidoComercialPage(pedido));
 
             (sender as ListView).SelectedItem = null;
         }
@@ -49,7 +57,10 @@ namespace SolariPDV.Views
 
         private void FABButton_Clicked(object sender, EventArgs e)
         {
-            Navigation.PushAsync(new PedidoInicioPage());
+            if (TipoPedido == Pedido.TipoPedido.PedidoPDV)
+                Navigation.PushAsync(new PedidoInicioPage());
+            else
+                Navigation.PushAsync(new PedidoComercialPage());
         }
 
         private void btBusca_Clicked(object sender, EventArgs e)

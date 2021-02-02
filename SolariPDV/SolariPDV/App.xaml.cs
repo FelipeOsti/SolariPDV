@@ -7,6 +7,8 @@ using SolariPDV.Models;
 using SolariPDV.GradientView;
 using Xamarin.Essentials;
 using System.Diagnostics;
+using System.Threading.Tasks;
+using SolariPDV.Views.Menu;
 
 namespace SolariPDV
 {
@@ -14,12 +16,17 @@ namespace SolariPDV
     {
         public static App current;
 
-        //public string sdsServidorApp = "ec2-18-229-119-232.sa-east-1.compute.amazonaws.com";
-        public string sdsServidorApp = "192.168.0.113";
+        public static string sdsServidorApp = "ec2-18-229-119-232.sa-east-1.compute.amazonaws.com";
+        //public static string sdsServidorApp = "172.20.10.3";
         public int nnrPorta = 212;
         public string sdsUsuario;
         public string sdsSenha;
+        public string sdsHostName;
+        public Boolean bboDashboard;
         public EstabelecimentoModel EstabSelected;
+
+        public static string userAPI = "solari";
+        public static string senhaAPI = "solari#123";
 
         static string usuarioKey = "userKey";
         static string senhaKey = "senhaKey";
@@ -38,7 +45,7 @@ namespace SolariPDV
             else
             {
                 sdsUsuario = Preferences.Get(usuarioKey, null);
-                sdsSenha = Preferences.Get(senhaKey, null);
+                sdsSenha = Preferences.Get(senhaKey, null);                
                 AfterLogin();
             }
         }
@@ -52,7 +59,11 @@ namespace SolariPDV
         {
             Preferences.Set(usuarioKey, sdsUsuario);
             Preferences.Set(senhaKey, sdsSenha);
+            IniciarApp();
+        }
 
+        private void IniciarApp()
+        {
             MainPage = new MainPage();
         }
 
@@ -75,6 +86,7 @@ namespace SolariPDV
         {
             Preferences.Remove(usuarioKey);
             Preferences.Remove(senhaKey);
+            App.current.sdsHostName = App.sdsServidorApp;
         }
     }
 }

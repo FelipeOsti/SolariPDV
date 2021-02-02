@@ -1,6 +1,8 @@
 ﻿using Rg.Plugins.Popup.Services;
 using SolariPDV.Models;
+using SolariPDV.Models.Material;
 using SolariPDV.ViewModels;
+using SolariPDV.ViewModels.Estoque;
 using SolariPDV.Views.PopUps;
 using System;
 using System.Collections.Generic;

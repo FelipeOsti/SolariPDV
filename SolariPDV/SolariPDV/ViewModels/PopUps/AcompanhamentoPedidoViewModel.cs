@@ -1,4 +1,5 @@
 ﻿using SolariPDV.Models;
+using SolariPDV.Models.Comercial;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;

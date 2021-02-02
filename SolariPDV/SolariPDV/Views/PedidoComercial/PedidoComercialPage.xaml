@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:forms="clr-namespace:dotMorten.Xamarin.Forms;assembly=dotMorten.Xamarin.Forms.AutoSuggestBox"
+             mc:Ignorable="d"
+             Title="Pedido Comercial"
+             x:Class="SolariPDV.Views.PedidoComercial.PedidoComercialPage">
+    <ContentPage.Content>
+        <StackLayout HorizontalOptions="Fill">
+            <forms:AutoSuggestBox 
+                Visual="Material"
+                PlaceholderText="Informe o Cliente"
+                TextChanged="AutoSuggestBox_TextChanged"
+                QuerySubmitted="AutoSuggestBox_QuerySubmitted"
+                DisplayMemberPath="DS_RAZAO"
+                SuggestionChosen="AutoSuggestBox_SuggestionChosen"/>
+
+            <forms:AutoSuggestBox 
+                Visual="Material"
+                PlaceholderText="Condição de Recebimento"
+                TextChanged="AutoSuggestBox_TextChanged_1"
+                QuerySubmitted="AutoSuggestBox_QuerySubmitted_1"
+                DisplayMemberPath="DS_CONDRECEB"
+                SuggestionChosen="AutoSuggestBox_SuggestionChosen_1"/>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

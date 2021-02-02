@@ -8,6 +8,7 @@ namespace SolariPDV.Models
     {
         public long ID_USUARIO { get; set; }
         public string DS_USUARIO { get; set; }
+        public string BO_VERDASHBOARD { get; set; }
         public List<EstabelecimentoModel> lstEstabelecimento { get; set; }
     }
 }

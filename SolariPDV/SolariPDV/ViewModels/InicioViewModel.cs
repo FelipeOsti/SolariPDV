@@ -1,6 +1,8 @@
 ﻿using Newtonsoft.Json;
 using SolariPDV.Models;
+using SolariPDV.Models.Comercial;
 using SolariPDV.Services;
+using SolariPDV.Services.Comercial;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -32,13 +34,13 @@ namespace SolariPDV.ViewModels
                 var json = await dL.GetPedidosMes();
 
                 var pedMes = JsonConvert.DeserializeObject<List<DashboardPedidosMesModel>>(json);
-                if (pedMes?.Count > 0)
+                if (pedMes?.Count > 0 && App.current.bboDashboard)
                 {
                     VL_VENDIDO = pedMes[0].VL_TOTAL;
                     QT_ITENS = pedMes[0].QT_TOTITEM;
                 }
                 else
-                {
+                {                    
                     VL_VENDIDO = 0;
                     QT_ITENS = 0;
                 }

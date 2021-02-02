@@ -8,6 +8,7 @@ using Android.Widget;
 using Android.OS;
 using ZXing.Mobile;
 using FFImageLoading.Forms.Platform;
+using Android.Util;
 
 namespace SolariPDV.Droid
 {
@@ -16,6 +17,8 @@ namespace SolariPDV.Droid
     {
         protected override void OnCreate(Bundle savedInstanceState)
         {
+            AndroidEnvironment.UnhandledExceptionRaiser += HandleAndroidException;
+
             TabLayoutResource = Resource.Layout.Tabbar;
             ToolbarResource = Resource.Layout.Toolbar;
 
@@ -28,6 +31,13 @@ namespace SolariPDV.Droid
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
             LoadApplication(new App());
+        }
+
+        void HandleAndroidException(object sender, RaiseThrowableEventArgs e)
+        {
+            Log.Error("INTERNAL DEBUG", "PLEASE HANDLE MY EXCEPTION!");
+            e.Handled = true;
+            System.Console.Write("YOU'VE JUST BEEN HANDLED!");
         }
 
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)

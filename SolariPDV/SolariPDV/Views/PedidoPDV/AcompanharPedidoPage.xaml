@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:pancakeview="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+             mc:Ignorable="d"
+             Title="Acompanhamento de Pedidos"
+             x:Class="SolariPDV.Views.PedidoPDV.AcompanharPedidoPage">
+    <ContentPage.Content>
+        <StackLayout>
+            <Label Text="Nenhum pedido pendente na cozinha." IsVisible="{Binding nenhumPedido}" HorizontalOptions="Center" TextColor="DarkGray" Margin="10"/>
+            <ActivityIndicator IsEnabled="True" IsRunning="True" IsVisible="{Binding IsBusy}" HeightRequest="40" Margin="10"/>
+            <CollectionView x:Name="collectionPedidos" ItemsSource="{Binding LstPedidos}" SelectionMode="None">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <StackLayout Padding="10" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" WidthRequest="{Binding widthRequest}">
+                            <pancakeview:PancakeView Elevation="3" BackgroundColor="#f0f0f0" CornerRadius="5" VerticalOptions="FillAndExpand">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="30" />
+                                        <RowDefinition Height="*" />
+                                        <RowDefinition Height="20" />
+                                        <RowDefinition Height="2" />
+                                        <RowDefinition Height="50" />
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <StackLayout Grid.Row="0" Grid.Column="0" Orientation="Horizontal">
+                                        <pancakeview:PancakeView BackgroundColor="Orange" Padding="5" CornerRadius="5">
+                                            <Label Text="{Binding sdsOrdem}" TextColor="White" />
+                                        </pancakeview:PancakeView>
+                                        <StackLayout Orientation="Horizontal" Padding="5" HorizontalOptions="FillAndExpand">
+                                            <Label Text="#"/>
+                                            <Label Text="{Binding ID_PEDIDO}" Margin="-3,0,5,0" WidthRequest="40" LineBreakMode="NoWrap" />
+                                            <Label Text="{Binding DS_RAZAO}" FontAttributes="Bold"/>
+                                            <Label Text="{Binding DS_SITDOCTO}" HorizontalOptions="EndAndExpand" HorizontalTextAlignment="End"/>
+                                            <Label Text="#" HorizontalOptions="End" TextColor="DarkOrange"/>
+                                            <Label Text="{Binding NR_SENHA}" Margin="-3,0,3,0" TextColor="DarkOrange"/>
+                                        </StackLayout>
+                                    </StackLayout>
+
+                                    <ScrollView Grid.Row="1" Grid.Column="0" HorizontalOptions="FillAndExpand" BackgroundColor="#d9d9d9" Padding="15" >
+                                        <Label Text="{Binding DS_ITENS}" FontSize="16" FontAttributes="Bold"/>
+                                    </ScrollView>
+
+                                    <Grid Grid.Row="2" Grid.Column="0" HorizontalOptions="FillAndExpand" Padding="5,0,5,0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="130" />
+                                            <ColumnDefinition Width="120" />
+                                        </Grid.ColumnDefinitions>
+                                        <Label Grid.Column="0" Text="{Binding DS_VENDEDOR}" FontSize="12" HorizontalOptions="Start" VerticalTextAlignment="Center"/>
+                                        <Label Grid.Column="1" Text="Previsão de Entrega" FontSize="10" HorizontalOptions="End" HorizontalTextAlignment="End" VerticalTextAlignment="Center" TextColor="{Binding corPrevEntrega}"/>
+                                        <Label Grid.Column="2" Text="{Binding DT_PREVENTREGA}" FontSize="12" HorizontalOptions="EndAndExpand" VerticalTextAlignment="Center" TextColor="{Binding corPrevEntrega}"/>
+                                    </Grid>
+
+                                    <BoxView Grid.Row="3" Grid.Column="0" BackgroundColor="#d9d9d9" Margin="3,0,3,0"/>
+
+                                    <StackLayout Grid.Row="4" Grid.Column="0" HorizontalOptions="Center" Padding="5" Orientation="Horizontal">
+                                        <Button Text="{Binding sdsBtIniciar}" IsEnabled="{Binding bboBtIniciarAtivado}" BackgroundColor="#1cb84c" Margin="0,0,20,0" CornerRadius="5" WidthRequest="100" Clicked="Button_Clicked_1"/>
+                                        <Button Text="Detalhar" BackgroundColor="#f78b0f" Margin="20,0,0,0" CornerRadius="5" WidthRequest="100" Clicked="Button_Clicked"/>
+                                    </StackLayout>
+
+                                </Grid>
+                            </pancakeview:PancakeView>
+                        </StackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

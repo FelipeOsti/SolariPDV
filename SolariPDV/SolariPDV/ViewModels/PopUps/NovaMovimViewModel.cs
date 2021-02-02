@@ -1,6 +1,8 @@
 ﻿using Newtonsoft.Json;
 using SolariPDV.Models;
+using SolariPDV.Models.Material;
 using SolariPDV.Services;
+using SolariPDV.Services.Material;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;

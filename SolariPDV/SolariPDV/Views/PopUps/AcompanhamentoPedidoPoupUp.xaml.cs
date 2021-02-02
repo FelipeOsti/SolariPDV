@@ -1,8 +1,10 @@
 ﻿using Rg.Plugins.Popup.Pages;
 using Rg.Plugins.Popup.Services;
 using SolariPDV.Models;
+using SolariPDV.Models.Comercial;
 using SolariPDV.ViewModels;
 using SolariPDV.ViewModels.PopUps;
+using SolariPDV.Views.PedidoPDV;
 using System;
 using System.Collections.Generic;
 using System.Linq;

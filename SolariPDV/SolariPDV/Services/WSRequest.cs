@@ -14,8 +14,8 @@ namespace SolariPDV.Services
         {
             try
             {
-
-                var client = new HttpClient() { BaseAddress = new Uri("http://" + App.current.sdsServidorApp + ":" + App.current.nnrPorta) };
+                var sdsHost = string.IsNullOrEmpty(App.current.sdsHostName) ? App.sdsServidorApp : App.current.sdsHostName;
+                var client = new HttpClient() { BaseAddress = new Uri("http://" + sdsHost + ":" + App.current.nnrPorta) };
 
                 var byteArray = Encoding.ASCII.GetBytes(App.current.sdsUsuario + ":" + App.current.sdsSenha);
                 client.DefaultRequestHeaders.Add("Authorization", "Basic " + Convert.ToBase64String(byteArray));
@@ -34,12 +34,36 @@ namespace SolariPDV.Services
             }
         }
 
-        internal static async Task<HttpResponseMessage> RequestPOST(string sdsUrl, string json)
+        public static async Task<HttpResponseMessage> RequestGETSolari(string sdsUrl)
         {
             try
             {
 
-                var client = new HttpClient() { BaseAddress = new Uri("http://" + App.current.sdsServidorApp + ":" + App.current.nnrPorta) };
+                var client = new HttpClient() { BaseAddress = new Uri("http://" + App.sdsServidorApp + ":" + App.current.nnrPorta) };
+
+                var byteArray = Encoding.ASCII.GetBytes(App.userAPI + ":" + App.senhaAPI);
+                client.DefaultRequestHeaders.Add("Authorization", "Basic " + Convert.ToBase64String(byteArray));
+                client.DefaultRequestHeaders.Add("Accept", "application/json");
+                client.DefaultRequestHeaders.Add("Accept-Encoding", "gzip, deflate");
+
+                var response = await client.GetAsync(sdsPrefix + sdsUrl);
+
+                response.EnsureSuccessStatusCode();
+
+                return response;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
+        internal static async Task<HttpResponseMessage> RequestPOST(string sdsUrl, string json)
+        {
+            try
+            {
+                var sdsHost = string.IsNullOrEmpty(App.current.sdsHostName) ? App.sdsServidorApp : App.current.sdsHostName;
+                var client = new HttpClient() { BaseAddress = new Uri("http://" + sdsHost + ":" + App.current.nnrPorta) };
 
                 var byteArray = Encoding.ASCII.GetBytes(App.current.sdsUsuario + ":" + App.current.sdsSenha);
                 client.DefaultRequestHeaders.Add("Authorization", "Basic " + Convert.ToBase64String(byteArray));

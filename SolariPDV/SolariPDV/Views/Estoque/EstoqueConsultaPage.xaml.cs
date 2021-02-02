@@ -1,5 +1,8 @@
 ﻿using SolariPDV.Models;
+using SolariPDV.Models.Material;
 using SolariPDV.ViewModels;
+using SolariPDV.ViewModels.Estoque;
+using SolariPDV.Views.PedidoPDV;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,22 +25,23 @@ namespace SolariPDV.Views.Estoque
         private bool bboShowOneTime = false;
         public EstoqueConsultaPage(bool _bboBarCode)
         {
+            InitializeComponent();
             EstoqueConsultaPageCurrent = this;
             BindingContext = estoqueViewModel = new EstoqueViewModel();
             bboBarCode = _bboBarCode;
-            InitializeComponent();            
+                       
         }
 
         protected override void OnAppearing()
         {
+            if(!bboBarCode) estoqueViewModel.GetEstoqueCommand.Execute(ProdutosSearchBar.Text);
             base.OnAppearing();
             if (bboBarCode && !bboShowOneTime)
             {
                 bboShowOneTime = true;
                 estoqueViewModel.EscanearCodigoBarras();
             }
-            else bboShowOneTime = false;
-            //estoqueViewModel.GetEstoqueCommand.Execute(null);
+            else bboShowOneTime = false;            
         }
 
         private async void ProdutosSearchBar_TextChanged(object sender, TextChangedEventArgs e)

@@ -31,13 +31,12 @@ namespace SolariPDV.Views
                 indicator.IsVisible = true;
                 btConfirma.IsEnabled = false;
 
-                App.current.sdsSenha = entrySenha.Text;
-                App.current.sdsUsuario = entryUsuario.Text;
-
                 var loginLogic = new LoginLogic();
+                App.current.sdsSenha = entrySenha.Text;
+                App.current.sdsUsuario = entryUsuario.Text;                
                 var bboOk = await loginLogic.VerificaLogin(entryUsuario.Text);
                 if (bboOk)
-                {
+                {                    
                     App.current.AfterLogin();
                 }
                 else

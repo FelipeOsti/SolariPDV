@@ -1,5 +1,7 @@
 ﻿using SolariPDV.Models;
+using SolariPDV.Models.Material;
 using SolariPDV.ViewModels;
+using SolariPDV.ViewModels.Estoque;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,8 +20,8 @@ namespace SolariPDV.Views.Estoque
         FamiliaEstoqueViewModel familiaViewModel;
         public FamiliaEstoquePage()
         {
-            BindingContext = familiaViewModel = new FamiliaEstoqueViewModel();
             InitializeComponent();
+            BindingContext = familiaViewModel = new FamiliaEstoqueViewModel();            
         }
 
         protected override void OnAppearing()

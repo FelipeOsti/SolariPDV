@@ -68,8 +68,8 @@
                                 </StackLayout>
                                 <StackLayout Orientation="Horizontal">
                                     <Label Text="{Binding DS_SITDOCTO}" FontSize="10" VerticalOptions="End"/>
-                                    <Label Text="Senha #" FontSize="12" WidthRequest="45" HorizontalOptions="EndAndExpand" VerticalOptions="End"/>
-                                    <Label Text="{Binding NR_SENHA}" FontSize="14" WidthRequest="40" FontAttributes="Bold"/>
+                                    <Label Text="Senha #" FontSize="12" WidthRequest="45" HorizontalOptions="EndAndExpand" VerticalOptions="End" IsVisible="{Binding bboVerSenha}"/>
+                                    <Label Text="{Binding NR_SENHA}" FontSize="14" WidthRequest="40" FontAttributes="Bold" IsVisible="{Binding bboVerSenha}"/>
                                 </StackLayout>
                                 <BoxView BackgroundColor="Silver" HeightRequest="1" HorizontalOptions="FillAndExpand"/>
                             </StackLayout>

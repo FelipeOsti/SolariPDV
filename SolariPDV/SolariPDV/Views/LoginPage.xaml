@@ -7,10 +7,11 @@
              x:Class="SolariPDV.Views.LoginPage">
     <ContentPage.Content>
         <StackLayout VerticalOptions="FillAndExpand" BackgroundColor="White">
-            <Image Source="solariLogoIco.jpg" HeightRequest="150" WidthRequest="150" Margin="80"/>
-            <Label Text="Solari Negócios" Margin="0,-70,0,0" HorizontalOptions="Center" FontAttributes="Bold" />
-            <Label Text="Desenvolvendo Soluções" TextColor="Gray" HorizontalOptions="Center" Margin="0,0,0,50"/>
-            <StackLayout Margin="10">
+            <Image Source="solariLogoIco.jpg" HeightRequest="120" WidthRequest="120" Margin="20"/>
+            <Label Text="Solari Negócios" HorizontalOptions="Center" FontAttributes="Bold" />
+            <Label Text="Desenvolvendo Soluções" TextColor="Gray" HorizontalOptions="Center" />
+            
+            <StackLayout Padding="10" Margin="0,10">
                 <Entry x:Name="entryUsuario" Placeholder="Usuário" />
                 <Entry x:Name="entrySenha" Placeholder="Senha" IsPassword="True" />
             </StackLayout>

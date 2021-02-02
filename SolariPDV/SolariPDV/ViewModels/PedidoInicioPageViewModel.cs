@@ -1,9 +1,12 @@
 ﻿using Newtonsoft.Json;
 using SolariPDV.Logic;
+using SolariPDV.Logic.Material;
 using SolariPDV.Models;
+using SolariPDV.Models.Material;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -42,15 +45,23 @@ namespace SolariPDV.ViewModels
                 }
                 
             }
-            finally { IsBusy = false; }
+            catch { }
+            finally { IsBusy = false; }            
         }
 
         internal async Task<List<CardapioModel>> RecuperaCardapioAsync()
         {
-            var cardapioLogic = new CardapioLogic();
-            var lista = await cardapioLogic.GetCardapio("");
+            try
+            {
+                var cardapioLogic = new CardapioLogic();
+                var lista = await cardapioLogic.GetCardapio("");
 
-            return JsonConvert.DeserializeObject<List<CardapioModel>>(lista);
+                return JsonConvert.DeserializeObject<List<CardapioModel>>(lista);
+            }
+            catch
+            {
+                return new List<CardapioModel>();
+            }
         }
 
         ObservableCollection<CardapioCateg> _lstCategorias;
