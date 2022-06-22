@@ -9,7 +9,7 @@
     <PackageReference Include="dotMorten.Xamarin.Forms.AutoSuggestBox" Version="1.1.1" />
     <PackageReference Include="FormsCurvedBottomNavigation" Version="1.3.0" />
     <PackageReference Include="LiveXAML" Version="2.1.73" />
-    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="Rg.Plugins.Popup" Version="1.2.0.223" />
     <PackageReference Include="RKSoftware.XamKeepScreen" Version="1.0.0" />
     <PackageReference Include="SuaveControls.FloatingActionButton" Version="2018.1.5" />
